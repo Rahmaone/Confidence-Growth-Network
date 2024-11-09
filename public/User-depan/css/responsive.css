@@ -9,13 +9,13 @@
         min-height: auto;
     }
 
-    .hero_area {
+    /* .hero_area {
         background: linear-gradient(130deg, #355e38, #58b651);
     }
 
     .hero_area .hero_bg_box {
         display: none;
-    }
+    } */
 
     .slider_section {
         padding: 45px 0 75px 0;
