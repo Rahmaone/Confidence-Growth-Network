@@ -71,27 +71,27 @@
                                 50%{transform: translate(-10px, 0)}
                                 100%{transform: translate(0, 0)}
                             }
-            
+
                             .triangle-float1 {
                                 animation: float1 5s infinite;
                             }
-            
+
                             @keyframes float2 {
                                 0%{transform: translate(0, 0)}
                                 50%{transform: translate(-5px, -5px)}
                                 100%{transform: translate(0, 0)}
                             }
-            
+
                             .triangle-float2 {
                                 animation: float2 4s infinite;
                             }
-            
+
                             @keyframes float3 {
                                 0%{transform: translate(0, 0)}
                                 50%{transform: translate(0, -10px)}
                                 100%{transform: translate(0, 0)}
                             }
-            
+
                             .triangle-float3 {
                                 animation: float3 6s infinite;
                             }
@@ -100,7 +100,7 @@
             </svg>
         </div>
     </div>
-    
+
 
       <!-- header section strats -->
       <header class="header_section">
@@ -109,7 +109,7 @@
         </div>
       </header>
       <!-- end header section -->
-      
+
       <!-- slider section -->
       <section class="slider_section">
         <div id="customCarousel1" class="carousel slide" data-ride="carousel">
@@ -124,11 +124,7 @@
                         Growth Network
                       </h1>
                       <p>
-                        Explicabo esse amet tempora quibusdam laudantium,
-                        laborum eaque magnam fugiat hic? Esse dicta aliquid
-                        error repudiandae earum suscipit fugiat molestias,
-                        veniam, vel architecto veritatis delectus repellat modi
-                        impedit sequi.
+                        Aplikasi Confident Growth Network adalah platform inovatif yang dirancang untuk membantu individu dalam mengembangkan kepercayaan diri dan keterampilan pertumbuhan pribadi mereka.
                       </p>
                       <div class="btn-box">
                         <a href="" class="btn1"> Selengkapnya </a>
@@ -147,7 +143,7 @@
         </div>
       </section>
       <!-- end slider section -->
-      
+
     </div>
     <svg id="wave" style="transform:rotate(180deg); transition: 0.3s; margin: 0; padding: 0" viewBox="0 0 1440 380" version="1.1" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="sw-gradient-0" x1="0" x2="0" y1="1" y2="0"><stop stop-color="rgba(53, 94, 59, 1)" offset="0%"></stop><stop stop-color="rgba(91, 134, 81, 1)" offset="100%"></stop></linearGradient></defs><path style="transform:translate(0, 0px); opacity:1" fill="url(#sw-gradient-0)" d="M0,38L48,76C96,114,192,190,288,234.3C384,279,480,291,576,266C672,241,768,177,864,133C960,89,1056,63,1152,57C1248,51,1344,63,1440,82.3C1536,101,1632,127,1728,145.7C1824,165,1920,177,2016,152C2112,127,2208,63,2304,63.3C2400,63,2496,127,2592,145.7C2688,165,2784,139,2880,126.7C2976,114,3072,114,3168,107.7C3264,101,3360,89,3456,88.7C3552,89,3648,101,3744,95C3840,89,3936,63,4032,63.3C4128,63,4224,89,4320,107.7C4416,127,4512,139,4608,139.3C4704,139,4800,127,4896,126.7C4992,127,5088,139,5184,139.3C5280,139,5376,127,5472,126.7C5568,127,5664,139,5760,139.3C5856,139,5952,127,6048,126.7C6144,127,6240,139,6336,139.3C6432,139,6528,127,6624,101.3C6720,76,6816,38,6864,19L6912,0L6912,380L6864,380C6816,380,6720,380,6624,380C6528,380,6432,380,6336,380C6240,380,6144,380,6048,380C5952,380,5856,380,5760,380C5664,380,5568,380,5472,380C5376,380,5280,380,5184,380C5088,380,4992,380,4896,380C4800,380,4704,380,4608,380C4512,380,4416,380,4320,380C4224,380,4128,380,4032,380C3936,380,3840,380,3744,380C3648,380,3552,380,3456,380C3360,380,3264,380,3168,380C3072,380,2976,380,2880,380C2784,380,2688,380,2592,380C2496,380,2400,380,2304,380C2208,380,2112,380,2016,380C1920,380,1824,380,1728,380C1632,380,1536,380,1440,380C1344,380,1248,380,1152,380C1056,380,960,380,864,380C768,380,672,380,576,380C480,380,384,380,288,380C192,380,96,380,48,380L0,380Z"></path></svg>
 

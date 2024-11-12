@@ -15,4 +15,8 @@ class guestController extends Controller
     {
         return view('guest.service');
     }
+    public function userservice()
+    {
+        return view('guest.modulPembelajaran');
+    }
 }
