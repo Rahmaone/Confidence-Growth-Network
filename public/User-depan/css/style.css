@@ -6,6 +6,16 @@ body {
     overflow-x: hidden;
 }
 
+:root {
+    /* Warna Resmi*/
+    --dark-green: #1d3421;
+    --hunter-green: #355e3b;
+    --fern-green: #5b8651;
+    --ecru: #dcbf85;
+    --rose-taupe: #8b635c;
+    --black-bean: #3b0d11;
+}
+
 .layout_padding {
     padding: 90px 0;
 }
@@ -136,12 +146,12 @@ a:focus {
 }
 
 .header_section {
-    padding: 15px 0;
+    padding: 0px 0;
 }
 
 .header_section .container-fluid {
-    padding-right: 25px;
-    padding-left: 25px;
+    padding-right: 0px;
+    padding-left: 0px;
 }
 
 .navbar-brand span {
@@ -1008,3 +1018,10 @@ a:focus {
     background-size: cover;
 }
 /*# sourceMappingURL=style.css.map */
+
+.hunter-green-bg {
+    background-color: var(--hunter-green);
+    width: 100%;
+    margin: 0;
+    padding: 15px 25px;
+}

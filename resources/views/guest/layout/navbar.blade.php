@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg custom_nav-container">
+<nav class="navbar navbar-expand-lg custom_nav-container hunter-green-bg">
     <a class="navbar-brand" href="index.html">
       <span class="font-italic">CGN</span>
     </a>
@@ -17,33 +17,33 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav">
-        <li class="nav-item active">
-          <a class="nav-link" href="index.html"
-            >Home <span class="sr-only">(current)</span></a
+        <li class="nav-item">
+          <a class="nav-link" href="{{route('home')}}"
+            >Home</a
           >
         </li>
         <li class="nav-item">
           <div class="dropdown">
-            <a 
-              class="nav-link dropdown-toggle" 
-              href="#" 
-              role="button" 
-              id="serviceDropdown" 
-              data-toggle="dropdown" 
-              aria-haspopup="true" 
+            <a
+              class="nav-link dropdown-toggle"
+              href="#"
+              role="button"
+              id="serviceDropdown"
+              data-toggle="dropdown"
+              aria-haspopup="true"
               aria-expanded="false"
             >
               Services
             </a>
             <div class="dropdown-menu" aria-labelledby="serviceDropdown">
-              <a class="dropdown-item" href="#">Modul Pembelajaran</a>
+              <a class="dropdown-item" href="{{route('userservice')}}">Modul Pembelajaran</a>
               <a class="dropdown-item" href="#">Chat Mentor CGN</a>
               <a class="dropdown-item" href="#">Kuis</a>
               <a class="dropdown-item" href="#">Event</a>
             </div>
           </div>
         </li>
-        
+
         <li class="nav-item">
             <a class="nav-link" href="#about">About</a>
         </li>

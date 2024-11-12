@@ -44,3 +44,8 @@ Route::group(['middleware' => 'auth'], function () {
 });
 Route::get('/guest', [guestController::class, 'index'])->name('home');
 Route::get('/guestservice', [guestController::class, 'service'])->name('service');
+Route::get('/userservice', [guestController::class, 'userservice'])->name('userservice');
+
+Route::group(['middleware' => 'authuser'], function () {
+
+});
