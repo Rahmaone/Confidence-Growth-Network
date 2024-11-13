@@ -508,8 +508,8 @@ a:focus {
 }
 
 .about_section {
-    background-color: #355e3b;
-    color: #ffffff;
+    background-color: var(--hunter-green);
+    color: white;
 }
 
 .about_section .heading_container {
@@ -550,6 +550,55 @@ a:focus {
 }
 
 .about_section .detail-box a:hover {
+    background-color: #4a7f57;
+}
+
+
+/* About us 2 */
+
+.about_section2 {
+    background-color: white;
+    color: black;
+}
+
+.about_section2 .heading_container {
+    margin-bottom: 45px;
+}
+
+.about_section2 .row {
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.about_section2 .img-box img {
+    max-width: 75%;
+    margin-top: -30px;
+}
+
+.about_section2 .detail-box h2 {
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+.about_section2 .detail-box p {
+    margin-top: 15px;
+    margin-bottom: 30px;
+}
+
+.about_section2 .detail-box a {
+    display: inline-block;
+    padding: 10px 45px;
+    background-color: #5b8651;
+    color: #ffffff;
+    border-radius: 0px;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
+    border: none;
+    margin-top: 15px;
+}
+
+.about_section2 .detail-box a:hover {
     background-color: #4a7f57;
 }
 
