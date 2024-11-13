@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\guestController;
+use App\Http\Controllers\userController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,7 +45,10 @@ Route::group(['middleware' => 'auth'], function () {
 });
 Route::get('/guest', [guestController::class, 'index'])->name('home');
 Route::get('/guestservice', [guestController::class, 'service'])->name('service');
-Route::get('/userservice', [guestController::class, 'userservice'])->name('userservice');
+Route::get('/guestservice2', [guestController::class, 'chatmentor'])->name('chatmentor');
+Route::get('/guestservice3', [guestController::class, 'kuiz'])->name('kuiz');
+
+Route::get('/login', [userController::class, 'login'])->name('login');
 
 Route::group(['middleware' => 'authuser'], function () {
 

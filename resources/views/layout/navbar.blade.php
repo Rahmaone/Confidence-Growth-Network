@@ -36,9 +36,9 @@
               Services
             </a>
             <div class="dropdown-menu" aria-labelledby="serviceDropdown">
-              <a class="dropdown-item" href="{{route('userservice')}}">Modul Pembelajaran</a>
-              <a class="dropdown-item" href="#">Chat Mentor CGN</a>
-              <a class="dropdown-item" href="#">Kuis</a>
+              <a class="dropdown-item" href="{{route('service')}}">Modul Pembelajaran</a>
+              <a class="dropdown-item" href="{{route('chatmentor')}}">Chat Mentor CGN</a>
+              <a class="dropdown-item" href="{{route('kuiz')}}">Kuis</a>
               <a class="dropdown-item" href="#">Event</a>
             </div>
           </div>
@@ -51,7 +51,7 @@
           <a class="nav-link" href="#team">Team</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">
+          <a class="nav-link" href="{{route('login')}}">
             <i class="fa fa-user" aria-hidden="true"></i> Login</a
           >
         </li>
