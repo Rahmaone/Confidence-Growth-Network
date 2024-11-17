@@ -5,7 +5,7 @@
       <div class="row">
         <div class="col-md-6 col-lg-3 info_col">
           <div class="info_contact">
-            <h4>Bandung, cibiru</h4>
+            <h4>Kontak</h4>
             <div class="contact_link_box">
               <a href="">
                 <i class="fa fa-map-marker" aria-hidden="true"></i>
@@ -13,7 +13,7 @@
               </a>
               <a href="">
                 <i class="fa fa-phone" aria-hidden="true"></i>
-                <span> Call +62 81394243448 </span>
+                <span> +62 81394243448 </span>
               </a>
               <a href="">
                 <i class="fa fa-envelope" aria-hidden="true"></i>
@@ -57,13 +57,13 @@
             </div>
           </div>
         </div>
-        <div class="col-md-6 col-lg-3 info_col">
+        {{-- <div class="col-md-6 col-lg-3 info_col">
           <h4>Subscribe</h4>
           <form action="#">
             <input type="text" placeholder="Enter email" />
             <button type="submit">Subscribe</button>
           </form>
-        </div>
+        </div>  --}}
       </div>
     </div>
   </section>

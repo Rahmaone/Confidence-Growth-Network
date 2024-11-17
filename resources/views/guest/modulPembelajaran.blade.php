@@ -1,7 +1,10 @@
 @extends('layout.app')
 
 @section('content')
+    <div class="heading_container heading_center layout_padding" style="margin-bottom:-14vh ">
+        <h1>Layanan <span>kami</span></h1>
 
+    </div>
     <!-- About Section Starts -->
     <section id="about" class=" about_section2 layout_padding">
       <div class="container">

@@ -33,6 +33,9 @@
 <!-- font awesome style -->
 <link href="{{ asset('User-depan/css/font-awesome.min.css') }}" rel="stylesheet" />
 
+{{-- icons --}}
+<link href="{{ asset('black') }}/css/nucleo-icons.css" rel="stylesheet" />
+
 <!-- Custom styles for this template -->
 <!-- <link href="css/style.css" rel="stylesheet" /> -->
 <link href="{{ asset('User-depan/css/style.css') }}" rel="stylesheet" />
