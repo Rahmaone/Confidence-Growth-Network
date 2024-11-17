@@ -4,16 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class userController extends Controller
+class UserController extends Controller
 {
 
     public function index()
     {
-       return view('user.index');
+       return view('admin.users.index');
     }
 
     public function login()
     {
-        return view('user.auth.login');
+        return view('admin.user.auth.login');
     }
 }

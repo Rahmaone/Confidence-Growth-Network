@@ -11,7 +11,7 @@ class PageController extends Controller
      */
     public function icons()
     {
-        return view('pages.icons');
+        return view('admin.pages.icons');
     }
 
     /**
@@ -21,7 +21,7 @@ class PageController extends Controller
      */
     public function maps()
     {
-        return view('pages.maps');
+        return view('admin.pages.maps');
     }
 
     /**
@@ -31,7 +31,7 @@ class PageController extends Controller
      */
     public function tables()
     {
-        return view('pages.tables');
+        return view('admin.pages.tables');
     }
 
     /**
@@ -41,7 +41,7 @@ class PageController extends Controller
      */
     public function notifications()
     {
-        return view('pages.notifications');
+        return view('admin.pages.notifications');
     }
 
     /**
@@ -51,7 +51,7 @@ class PageController extends Controller
      */
     public function rtl()
     {
-        return view('pages.rtl');
+        return view('admin.pages.rtl');
     }
 
     /**
@@ -61,7 +61,7 @@ class PageController extends Controller
      */
     public function typography()
     {
-        return view('pages.typography');
+        return view('admin.pages.typography');
     }
 
     /**
@@ -71,6 +71,6 @@ class PageController extends Controller
      */
     public function upgrade()
     {
-        return view('pages.upgrade');
+        return view('admin.pages.upgrade');
     }
 }

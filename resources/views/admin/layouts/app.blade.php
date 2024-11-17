@@ -21,24 +21,24 @@
         <link href="{{ asset('black') }}/css/theme.css" rel="stylesheet" />
     </head>
     <body class="{{ $class ?? '' }}">
-        @auth()
+        {{-- @auth() --}}
             <div class="wrapper">
-                    @include('layouts.navbars.sidebar')
+                    @include('admin.layouts.navbars.sidebar')
                 <div class="main-panel">
-                    @include('layouts.navbars.navbar')
+                    @include('admin.layouts.navbars.navbar')
 
                     <div class="content">
                         @yield('content')
                     </div>
 
-                    @include('layouts.footer')
+                    @include('admin.layouts.footer')
                 </div>
             </div>
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            <form id="logout-form" action="#" method="POST" style="display: none;">
                 @csrf
             </form>
-        @else
-            @include('layouts.navbars.navbar')
+        {{-- @else
+            @include('admin.layouts.navbars.navbar')
             <div class="wrapper wrapper-full-page">
                 <div class="full-page {{ $contentClass ?? '' }}">
                     <div class="content">
@@ -46,10 +46,10 @@
                             @yield('content')
                         </div>
                     </div>
-                    @include('layouts.footer')
+                    @include('admin.layouts.footer')
                 </div>
             </div>
-        @endauth
+        @endauth --}}
         <div class="fixed-plugin">
             <div class="dropdown show-dropdown">
                 <a href="#" data-toggle="dropdown">

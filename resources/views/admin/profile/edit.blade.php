@@ -12,7 +12,7 @@
                             @csrf
                             @method('put')
 
-                            @include('alerts.success')
+                            @include('admin.alerts.success')
 
                             <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
                                 <label>{{ __('Name') }}</label>
@@ -23,7 +23,7 @@
                             <div class="form-group{{ $errors->has('email') ? ' has-danger' : '' }}">
                                 <label>{{ __('Email address') }}</label>
                                 <input type="email" name="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="{{ __('Email address') }}" value="{{ old('email', auth()->user()->email) }}">
-                                @include('alerts.feedback', ['field' => 'email'])
+                                @include('admin.alerts.feedback', ['field' => 'email'])
                             </div>
                     </div>
                     <div class="card-footer">
