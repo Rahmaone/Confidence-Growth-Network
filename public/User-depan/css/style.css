@@ -553,7 +553,6 @@ a:focus {
     background-color: #4a7f57;
 }
 
-
 /* About us 2 */
 
 .about_section2 {
@@ -806,6 +805,92 @@ a:focus {
 }
 
 /*team section end*/
+
+/*team section */
+.team_section2 {
+    text-align: center;
+    background-color: var(--hunter-green);
+    color: #000000;
+    font-weight: bold;
+}
+
+.team_section2 .heading_container h1 span {
+    color: white;
+}
+
+.team_section2 .heading_container {
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+
+.team_section2 .team_container {
+    padding: 0 15px;
+}
+
+.team_section2 .team_container .box {
+    padding: 35px 0 0 0;
+    border-radius: 5px;
+    overflow: hidden;
+    -webkit-transition: all 0.1s;
+    transition: all 0.1s;
+    margin-top: 45px;
+    background: white;
+}
+
+.team_section2 .heading_container h1 {
+    margin-bottom: 50px;
+}
+
+.team_section2 .team_container .box .img-box {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.team_section2 .team_container .box .img-box img {
+    width: 120px;
+    border-radius: 100%;
+    border: 5px solid var(--hunter-green)\; /* Gunakan warna Hunter Green untuk border */
+}
+
+.team_section2 .team_container .box .detail-box {
+    margin: 25px 0;
+}
+
+.team_section2 .team_container .box .detail-box h5 {
+    color: var(--hunter-green); /* Gunakan warna Hunter Green untuk judul */
+    font-weight: 600;
+    position: relative;
+}
+
+.team_section2 .team_container .box .social_box {
+    padding: 10px 45px 20px 45px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+}
+
+.team_section2 .team_container .box .social_box a {
+    color: var(--hunter-green);
+    font-size: 22px;
+}
+
+.team_section2 .team_container .box .social_box a:hover {
+    color: #ffffff;
+}
+
+/*team section end*/
+
 /* client section start */
 .client_section .heading_container {
     margin-bottom: 30px;

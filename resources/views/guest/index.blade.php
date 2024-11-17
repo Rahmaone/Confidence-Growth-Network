@@ -120,7 +120,7 @@
             <div class="col-md-4">
               <div class="box">
                 <div class="img-box">
-                  <img src="{{ asset('User-depan/images/layanan1.png') }}" alt="" />
+                    <i class="tim-icons tim-icons-60 icon-book-bookmark" aria-hidden="true"></i>
                 </div>
                 <div class="detail-box">
                   <h5>Modul Pembelajaran</h5>
@@ -129,48 +129,59 @@
                     content of a page when looking at its layout. The point of
                     using
                   </p>
-                  <a href=""> Read More </a>
+                  <a href="{{route('service')}}"> Baca selengkapnya </a>
                 </div>
               </div>
             </div>
             <div class="col-md-4">
               <div class="box">
                 <div class="img-box">
-                  <img src="{{ asset('User-depan/images/layanan2.png') }}" alt="" />
+                    <i class="tim-icons tim-icons-60 icon-chat-33" aria-hidden="true"></i>
                 </div>
                 <div class="detail-box">
                   <h5>Chat mentor CGN</h5>
                   <p>
-                    fact that a reader will be distracted by the readable
-                    content of a page when looking at its layout. The point of
-                    using
+                    Temui mentor kami yang siap membantu Anda setiap saat! Dapatkan bimbingan langsung,
+                    tips praktis, dan solusi cepat untuk semua pertanyaan Anda.
                   </p>
-                  <a href="service.html"> Read More </a>
+                  <a href="{{route('chatmentor')}}"> Baca selengkapnya </a>
                 </div>
               </div>
             </div>
             <div class="col-md-4">
               <div class="box">
                 <div class="img-box">
-                  <img src="{{ asset('User-depan/images/layanan3.png') }}" alt="" />
+                    <i class="tim-icons tim-icons-60 icon-bulb-63" aria-hidden="true"></i>
                 </div>
                 <div class="detail-box">
                   <h5>Kuiz</h5>
                   <p>
-                    fact that a reader will be distracted by the readable
-                    content of a page when looking at its layout. The point of
-                    using
+                    "Dapatkan umpan balik instan dari kuis kami dan tingkatkan pengetahuan Anda.
+                    Setiap pertanyaan adalah kesempatan untuk belajar lebih baik."
                   </p>
-                  <a href=""> Read More </a>
+                  <a href="{{route('kuiz')}}"> Baca selengkapnya </a>
                 </div>
               </div>
             </div>
-
+            <div class="col-md-4">
+                <div class="box">
+                  <div class="img-box">
+                      <i class="tim-icons tim-icons-60 icon-calendar-60" aria-hidden="true"></i>
+                  </div>
+                  <div class="detail-box">
+                    <h5>Event</h5>
+                    <p>
+                      fact that a reader will be distracted by the readable
+                      content of a page when looking at its layout. The point of
+                      using
+                    </p>
+                    <a href=""> Baca selengkapnya </a>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="btn-box">
-            <a href=""> View All </a>
-          </div>
+
         </div>
       </div>
     </section>
@@ -224,7 +235,7 @@
     <section id="team" class="team_section layout_padding">
       <div class="container-fluid">
         <div class="heading_container heading_center">
-          <h1 class="">Our <span> Team</span></h1>
+          <h1 class="">Our <span> Mentor</span></h1>
         </div>
 
         <div class="team_container">
@@ -346,6 +357,8 @@
       </div>
     </section>
     <!-- end team section -->
+
+
     {{--  footer --}}
 
     <!-- client section -->
