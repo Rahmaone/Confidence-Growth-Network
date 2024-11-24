@@ -125,9 +125,9 @@
                 <div class="detail-box">
                   <h5>Modul Pembelajaran</h5>
                   <p>
-                    fact that a reader will be distracted by the readable
-                    content of a page when looking at its layout. The point of
-                    using
+                    "Akses modul pembelajaran interaktif CGN. Tingkatkan
+                     keterampilan dan kepercayaan diri Anda kapan saja, di mana saja,
+                     |dengan materi berkualitas tinggi."
                   </p>
                   <a href="{{route('service')}}"> Baca selengkapnya </a>
                 </div>
@@ -171,9 +171,8 @@
                   <div class="detail-box">
                     <h5>Event</h5>
                     <p>
-                      fact that a reader will be distracted by the readable
-                      content of a page when looking at its layout. The point of
-                      using
+                        "Ikuti event modul CGN dan raih peluang luar biasa untuk belajar langsung dari ahli.
+                        Tingkatkan pengetahuan dan keterampilan Anda bersama komunitas yang mendukung."
                     </p>
                     <a href=""> Baca selengkapnya </a>
                   </div>

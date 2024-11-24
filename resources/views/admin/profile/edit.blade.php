@@ -1,4 +1,4 @@
-@extends('layouts.app', ['page' => __('User Profile'), 'pageSlug' => 'profile'])
+@extends('admin.layouts.app', ['page' => __('User Profile'), 'pageSlug' => 'profile'])
 
 @section('content')
     <div class="row">
@@ -7,7 +7,7 @@
                 <div class="card-header">
                     <h5 class="title">{{ __('Edit Profile') }}</h5>
                 </div>
-                <form method="post" action="{{ route('profile.update') }}" autocomplete="off">
+                <form method="post" action="{{ route('admin.profile.update') }}" autocomplete="off">
                     <div class="card-body">
                             @csrf
                             @method('put')
@@ -17,7 +17,7 @@
                             <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
                                 <label>{{ __('Name') }}</label>
                                 <input type="text" name="name" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ __('Name') }}" value="{{ old('name', auth()->user()->name) }}">
-                                @include('alerts.feedback', ['field' => 'name'])
+                                @include('admin.alerts.feedback', ['field' => 'name'])
                             </div>
 
                             <div class="form-group{{ $errors->has('email') ? ' has-danger' : '' }}">
@@ -36,23 +36,23 @@
                 <div class="card-header">
                     <h5 class="title">{{ __('Password') }}</h5>
                 </div>
-                <form method="post" action="{{ route('profile.password') }}" autocomplete="off">
+                <form method="post" action="{{ route('admin.profile.password') }}" autocomplete="off">
                     <div class="card-body">
                         @csrf
                         @method('put')
 
-                        @include('alerts.success', ['key' => 'password_status'])
+                        @include('admin.alerts.success', ['key' => 'password_status'])
 
                         <div class="form-group{{ $errors->has('old_password') ? ' has-danger' : '' }}">
                             <label>{{ __('Current Password') }}</label>
                             <input type="password" name="old_password" class="form-control{{ $errors->has('old_password') ? ' is-invalid' : '' }}" placeholder="{{ __('Current Password') }}" value="" required>
-                            @include('alerts.feedback', ['field' => 'old_password'])
+                            @include('admin.alerts.feedback', ['field' => 'old_password'])
                         </div>
 
                         <div class="form-group{{ $errors->has('password') ? ' has-danger' : '' }}">
                             <label>{{ __('New Password') }}</label>
                             <input type="password" name="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" placeholder="{{ __('New Password') }}" value="" required>
-                            @include('alerts.feedback', ['field' => 'password'])
+                            @include('admin.alerts.feedback', ['field' => 'password'])
                         </div>
                         <div class="form-group">
                             <label>{{ __('Confirm New Password') }}</label>
