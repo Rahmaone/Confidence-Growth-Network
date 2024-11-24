@@ -12,11 +12,15 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    // Specify the custom table name
+    protected $table = 'user';
+
     // Define fillable attributes for mass assignment
     protected $fillable = [
         'name',
         'email',
         'password',
+        'role',
     ];
 
     // Hide attributes like the password and remember_token
@@ -30,4 +34,20 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    // Helper methods to check user roles
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
+    }
+
+    public function isMentor()
+    {
+        return $this->role === 'mentor';
+    }
+
+    public function isUser()
+    {
+        return $this->role === 'user';
+    }
 }

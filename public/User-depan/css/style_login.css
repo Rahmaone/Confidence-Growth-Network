@@ -5,7 +5,7 @@
 }
 
 :root {
-    /* Warna Resmi*/
+    /* Custom Theme Colors */
     --dark-green: #1d3421;
     --hunter-green: #355e3b;
     --fern-green: #5b8651;
@@ -15,17 +15,10 @@
 }
 
 body {
-    /* background: #f6f5f7;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
-	font-family: 'Montserrat', sans-serif;
-	height: 100vh; */
+    font-family: "Montserrat", sans-serif;
+    margin: 0;
     height: 100%;
-    width: 100%;
-
-    margin: 0px 0 0px;
+    background-color: #f6f5f7;
 }
 
 main {
@@ -42,10 +35,6 @@ h1 {
     margin: 0;
 }
 
-h2 {
-    text-align: center;
-}
-
 p {
     font-size: 14px;
     font-weight: 100;
@@ -54,15 +43,13 @@ p {
     margin: 20px 0 30px;
 }
 
-span {
-    font-size: 12px;
-}
-
-.btn_sosial {
-    color: #333;
-    font-size: 14px;
-    text-decoration: none;
-    margin: 15px 0;
+input {
+    background-color: #eee;
+    border: none;
+    padding: 12px 15px;
+    margin: 8px 0;
+    width: 100%;
+    border-radius: 5px;
 }
 
 button {
@@ -76,6 +63,7 @@ button {
     letter-spacing: 1px;
     text-transform: uppercase;
     transition: transform 80ms ease-in;
+    cursor: pointer;
 }
 
 button:active {
@@ -100,14 +88,6 @@ button.ghost {
     padding: 0 50px;
     height: 100%;
     text-align: center;
-}
-
-input {
-    background-color: #eee;
-    border: none;
-    padding: 12px 15px;
-    margin: 8px 0;
-    width: 100%;
 }
 
 .container.containerlogin {
@@ -248,27 +228,44 @@ input {
     width: 40px;
 }
 
-/* footer {
-    background-color: #222;
-    color: #fff;
-    font-size: 14px;
-    bottom: 0;
-    position: fixed;
-    left: 0;
-    right: 0;
-    text-align: center;
-    z-index: 999;
-} */
-
-footer p {
-    margin: 10px 0;
+/* Additional styling for better control */
+form input[type="email"],
+form input[type="password"] {
+    border-radius: 5px;
 }
 
-/* footer i {
-    color: red;
-} */
+form button {
+    margin-top: 10px;
+}
 
-/* footer a {
-    color: #3c97bf;
-    text-decoration: none;
-} */
+/* Media query for mobile responsiveness */
+@media (max-width: 768px) {
+    .container.containerlogin {
+        width: 100%;
+        min-height: 400px;
+    }
+
+    .form-container {
+        padding: 20px;
+    }
+
+    .overlay-container {
+        width: 100%;
+        left: 0;
+    }
+
+    .overlay {
+        left: 0;
+        width: 200%;
+    }
+
+    .sign-in-container,
+    .sign-up-container {
+        width: 100%;
+    }
+
+    .container.right-panel-active .sign-in-container,
+    .container.right-panel-active .sign-up-container {
+        transform: translateX(0);
+    }
+}

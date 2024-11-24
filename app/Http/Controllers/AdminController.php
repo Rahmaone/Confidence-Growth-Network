@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-class PageController extends Controller
+class AdminController extends Controller
 {
     /**
      * Display icons page

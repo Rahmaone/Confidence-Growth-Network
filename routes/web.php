@@ -2,8 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\guestController;
 use App\Http\Controllers\userController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,36 +24,45 @@ Route::get('/', function () {
 
 });
 
-// Auth::routes();
+Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('login', [LoginController::class, 'login']);
+Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+Route::post('register', [RegisterController::class, 'register'])->name('register');
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
-// Auth::routes();
 
-// Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
-// ->middleware('auth');
-// ['middleware' => 'auth'],
-Route::group([], function () {
-		Route::get('icons', ['as' => 'pages.icons', 'uses' => 'App\Http\Controllers\PageController@icons']);
-		Route::get('maps', ['as' => 'pages.maps', 'uses' => 'App\Http\Controllers\PageController@maps']);
-		Route::get('notifications', ['as' => 'pages.notifications', 'uses' => 'App\Http\Controllers\PageController@notifications']);
-		Route::get('rtl', ['as' => 'pages.rtl', 'uses' => 'App\Http\Controllers\PageController@rtl']);
-		Route::get('tables', ['as' => 'pages.tables', 'uses' => 'App\Http\Controllers\PageController@tables']);
-		Route::get('typography', ['as' => 'pages.typography', 'uses' => 'App\Http\Controllers\PageController@typography']);
-		Route::get('upgrade', ['as' => 'pages.upgrade', 'uses' => 'App\Http\Controllers\PageController@upgrade']);
+
+// Auth::routes();
+Route::prefix('admin')->as('admin.')->group(function () {
+	Route::get('/home', [HomeController::class, 'index'])->name('home');
+	// Auth::routes();
+
+	// Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
+	// ->middleware('auth');
+	// ['middleware' => 'auth'],
+	Route::prefix('pages')->as('pages.')->group(function () {
+			Route::get('icons', [AdminController::class, 'icons'])->name('icons');
+			Route::get('maps', [AdminController::class, 'maps'])->name('maps');
+			Route::get('notifications', [AdminController::class, 'notifications'])->name('notifications');
+			Route::get('rtl', [AdminController::class, 'rtl'])->name('rtl');
+			Route::get('tables', [AdminController::class, 'tables'])->name('tables');
+			Route::get('typography', [AdminController::class, 'typography'])->name('typography');
+			Route::get('upgrade', [AdminController::class, 'upgrade'])->name('upgrade');
+	});
+
+	Route::group([], function () {
+		Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
+		Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
+		Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
+		Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
+	});
 });
 
-Route::group([], function () {
-	Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
-	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
-	Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
-	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
-});
-Route::get('/guest', [guestController::class, 'index'])->name('home');
-Route::get('/guestservice', [guestController::class, 'service'])->name('service');
-Route::get('/guestservice2', [guestController::class, 'chatmentor'])->name('chatmentor');
-Route::get('/guestservice3', [guestController::class, 'kuiz'])->name('kuiz');
+Route::get('/home', [guestController::class, 'index'])->name('home');
+Route::get('/service', [guestController::class, 'service'])->name('service');
+Route::get('/service2', [guestController::class, 'chatmentor'])->name('chatmentor');
+Route::get('/service3', [guestController::class, 'kuiz'])->name('kuiz');
 
-Route::get('/login', [userController::class, 'login'])->name('login');
+
 
 Route::group(['middleware' => 'authuser'], function () {
 

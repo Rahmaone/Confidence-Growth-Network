@@ -9,29 +9,46 @@
 @section('content')
     <div class="container containerlogin" id="container">
         <div class="form-container sign-up-container">
-            <form action="#" class="form-login">
+            <form method="POST" action="{{ route('register') }}" class="form-login">
+                @csrf
                 <h1>Buat Akun</h1>
                 <div class="social-container">
                     <a href="#" class="social btn_sosial"><i class="fa fa-google"></i></a>
                 </div>
-                <span>Gunakan email anda untuk login</span>
-                <input type="text" placeholder="Name" />
-                <input type="email" placeholder="Email" />
-                <input type="password" placeholder="Password" />
-                <button>Sign Up</button>
+                <span>Gunakan email anda untuk register</span>
+                <input type="text" name="name" id="register-name" value="{{ old('name') }}" placeholder="Name"/>
+                @error('name')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+                <input type="email" name="email" id="register-email" placeholder="Email"/>
+                @error('email')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+                <input type="password" name="password" id="register-password" placeholder="Password"/>
+                @error('name')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+                <button type="submit">Register</button>
             </form>
         </div>
         <div class="form-container sign-in-container">
-            <form action="#" class="form-login">
+            <form method="POST" action="{{ route('login') }}" class="form-login">
+                @csrf
                 <h1>Login</h1>
                 <div class="social-container">
                     <a href="#" class="social btn_sosial"><i class="fa fa-google"></i></a>
                 </div>
-                <span>masukan akun anda</span>
-                <input type="email" placeholder="Email" />
-                <input type="password" placeholder="Password" />
+                <span>Masukan akun anda</span>
+                <input type="email" name="email" id="login-email" placeholder="Email" />
+                @error('email')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+                <input type="password" name="password" id="login-password" placeholder="Password" />
+                @error('password')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
                 <a href="#" class="btn_sosial">Forgot your password?</a>
-                <button>Sign In</button>
+                <button type="submit">Log In</button>
             </form>
         </div>
         <div class="overlay-container">
