@@ -1,4 +1,4 @@
-@extends('layouts.app', ['page' => __('Maps'), 'pageSlug' => 'maps'])
+@extends('admin.layouts.app', ['page' => __('Maps'), 'pageSlug' => 'maps'])
 
 @section('content')
     <div class="row">

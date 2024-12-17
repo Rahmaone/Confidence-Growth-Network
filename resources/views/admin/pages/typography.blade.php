@@ -1,4 +1,4 @@
-@extends('layouts.app', ['page' => __('Typography'), 'pageSlug' => 'typography'])
+@extends('admin.layouts.app', ['page' => __('Typography'), 'pageSlug' => 'typography'])
 
 @section('content')
   <div class="row">
