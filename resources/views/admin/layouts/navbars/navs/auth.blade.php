@@ -63,7 +63,12 @@
                         </li>
                         <li class="dropdown-divider"></li>
                         <li class="nav-link">
-                            <a href="#" class="nav-item dropdown-item" onclick="event.preventDefault();  document.getElementById('logout-form').submit();">{{ __('Log out') }}</a>
+                            <form action="{{ route('logout') }}" method="POST">
+                                @csrf
+                                @method('POST') <!-- CSRF token and POST method -->
+                                <button type="submit" class="nav-item dropdown-item">Logout</button>
+                            </form>
+                            {{-- <a href="{{ route('logout') }}" class="nav-item dropdown-item">Log out</a> --}}
                         </li>
                     </ul>
                 </li>
