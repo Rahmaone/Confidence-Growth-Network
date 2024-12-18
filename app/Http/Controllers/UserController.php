@@ -2,26 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ModulPembelajaran;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+
     public function index()
     {
-        return view('admin.users.index');
+       return view('admin.users.index');
     }
 
     public function login()
     {
         return view('user.auth.login');
-    }
-    public function bukamodulPembelajaran()
-    {
-        // Ambil data dari database menggunakan model
-        $modulPembelajaran = ModulPembelajaran::paginate(3); // 5 item per halaman
-        // Kirim data ke view
-        return view('user.fitur.modul_pembelajaran', compact('modulPembelajaran'));
-        dd($modulPembelajaran); // Dump data untuk memastikan isi variabel
     }
 }
