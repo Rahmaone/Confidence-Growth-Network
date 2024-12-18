@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\HasSlug;
 
-
 class ModulPembelajaran extends Model
 {
     use HasFactory, HasSlug;
@@ -19,7 +18,6 @@ class ModulPembelajaran extends Model
         'description',
         'file',
         'slug',  // Tambahkan slug ke sini
-        'image',
     ];
 
     // Fungsi untuk menentukan sumber slug (berdasarkan kolom 'title')

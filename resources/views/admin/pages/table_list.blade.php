@@ -1,4 +1,4 @@
-@extends('admin.layouts.app', ['Page' => 'table', 'titlePage' => __('Table List')])
+@extends('layouts.app', ['activePage' => 'table', 'titlePage' => __('Table List')])
 
 @section('content')
 <div class="content">
