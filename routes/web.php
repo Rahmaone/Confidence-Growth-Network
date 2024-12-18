@@ -7,6 +7,7 @@ use App\Http\Controllers\guestController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Api\StreamChatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -64,6 +65,14 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     });
 });
 
+Route::middleware(['auth', 'role:user'])->group(function () {
+    Route::prefix('user')->as('user.')->group(function () {
+        Route::get('/chatmentor', [UserController::class, 'chatmentor'])->name('chatmentor');
+        Route::get('/chatmentor2', [StreamChatController::class, 'chatmentor2'])->name('chatmentor2');
+
+    });
+});
+
 Route::get('/home', [guestController::class, 'index'])->name('home');
 Route::get('/service', [guestController::class, 'service'])->name('service');
 Route::get('/service2', [guestController::class, 'chatmentor'])->name('chatmentor');
@@ -76,6 +85,10 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 });
 
 
-Route::group(['middleware' => 'authuser'], function () {
 
-});
+
+
+
+Route::get('/chat/token', [StreamChatController::class, 'generateToken']);
+Route::post('/chat/channel', [StreamChatController::class, 'createChannel']);
+
