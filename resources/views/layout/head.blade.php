@@ -1,4 +1,8 @@
 <!-- Basic -->
+
+<link href="{{ asset('User-depan/css/style.css') }}" rel="stylesheet" />
+<!-- responsive style -->
+<link href="{{ asset('User-depan/css/responsive.css') }}" rel="stylesheet" />
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <!-- Mobile Metas -->
@@ -38,6 +42,4 @@
 
 <!-- Custom styles for this template -->
 <!-- <link href="css/style.css" rel="stylesheet" /> -->
-<link href="{{ asset('User-depan/css/style.css') }}" rel="stylesheet" />
-<!-- responsive style -->
-<link href="{{ asset('User-depan/css/responsive.css') }}" rel="stylesheet" />
+

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use App\Models\ModulPembelajaran;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage; // Tambahkan ini
+use Illuminate\Support\Str;
 class AdminController extends Controller
 {
     /**
@@ -74,7 +76,8 @@ class AdminController extends Controller
     {
         return view('admin.pages.upgrade');
     }
-      public function modulPembelajaran()
+
+    public function modulPembelajaran()
     {
         $ModulPembelajaran = ModulPembelajaran::all();
         return view('admin.pages.Modul_Pembelajaran.modulPembelajaran', [
@@ -86,37 +89,116 @@ class AdminController extends Controller
     {
         return view('admin.pages.Modul_Pembelajaran.createModul');
     }
-
-        public function createModul(Request $request)
+    public function createModul(Request $request)
     {
         // Validate the form data
         $validated = $request->validate([
             'title' => 'required|string|max:32',
             'description' => 'required|string|max:255',
-            'file' => 'required|file|mimes:pdf,doc,docx|max:10240', // File validation
+            'file' => 'nullable|file|mimes:pdf,doc,docx|max:10240',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi untuk gambar
+            'slug' => 'unique:modul_pembelajaran,slug' // Validasi unik
         ]);
 
-        // Handle the file upload
-        if ($request->hasFile('file')) {
-            // Get the uploaded file
-            $file = $request->file('file');
+        // Handle file upload
+        $filePath = $request->file('file') ? $request->file('file')->store('modul_pembelajaran', 'public') : null;
 
-            // Store the file in the 'modul_pembelajaran' folder on the 'public' disk
-            $filePath = $request->file('file')->store('modul_pembelajaran', 'public');
+        // Handle image upload
+        $imagePath = $request->file('image') ? $request->file('image')->store('modul_images', 'public') : null;
 
+        // Save the data in the database
+        ModulPembelajaran::create([
+            'title' => $validated['title'],
+            'description' => $validated['description'],
+            'file' => $filePath,  // Simpan path file
+            'image' => $imagePath, // Simpan path gambar
+            'slug' => $this->createSlug($validated['title']),
+        ]);
 
-            // Save the data in the database including the file path
-            ModulPembelajaran::create([
-                'title' => $validated['title'],
-                'description' => $validated['description'],
-                'file' => $filePath,  // Store the file path in the database
-            ]);
+        return redirect()->route('admin.modulPembelajaran')->with('success', 'Modul berhasil diupload!');
+    }
 
-            // Redirect or return a response
-            return redirect()->route('admin.modulPembelajaran')->with('success', 'Modul berhasil diupload!');
+        public function editModul($id)
+        {
+            $modul = ModulPembelajaran::findOrFail(id: $id); // Cari modul berdasarkan ID
+            return view('admin.pages.Modul_Pembelajaran.editModul', compact('modul')); // Tampilkan halaman edit
         }
 
-        // If no file uploaded, return an error message
-        return redirect()->back()->with('error', 'File gagal diupload');
-    }
+        // Fungsi untuk membuat slug unik
+        public function createSlug($title)
+        {
+            $slug = Str::slug($title); // Membuat slug dasar
+            $existingSlugs = ModulPembelajaran::where('slug', 'LIKE', "{$slug}%")->pluck('slug'); // Ambil slug yang mirip
+
+            // Tambahkan angka jika slug sudah ada
+            $counter = 1;
+            $originalSlug = $slug;
+            while ($existingSlugs->contains($slug)) {
+                $slug = "{$originalSlug}-" . $counter++;
+            }
+
+            return $slug;
+        }
+
+        // Fungsi untuk memperbarui modul
+        public function updateModul(Request $request, $id)
+        {
+            // Validasi input
+            $validated = $request->validate([
+                'title' => 'required|string|max:255',
+                'description' => 'required|string',
+                'file' => 'nullable|file|mimes:pdf,doc,docx|max:10240',
+                'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi gambar
+            ]);
+
+            // Temukan modul berdasarkan ID
+            $modul = ModulPembelajaran::findOrFail($id);
+
+            // Cek apakah ada file yang diunggah
+            if ($request->hasFile('file')) {
+                if ($modul->file) {
+                    Storage::disk('public')->delete($modul->file);
+                }
+                $filePath = $request->file('file')->store('modul_pembelajaran', 'public');
+                $modul->update(['file' => $filePath]);
+            }
+
+            // Cek apakah ada gambar yang diunggah
+            if ($request->hasFile('image')) {
+                if ($modul->image) {
+                    Storage::disk('public')->delete($modul->image);
+                }
+                $imagePath = $request->file('image')->store('modul_images', 'public');
+                $modul->update(['image' => $imagePath]);
+            }
+
+            // Update data lainnya
+            $modul->update([
+                'title' => $validated['title'],
+                'description' => $validated['description'],
+            ]);
+
+            return redirect()->route('admin.modulPembelajaran')->with('success', 'Modul berhasil diperbarui!');
+        }
+
+        // Fungsi untuk menghapus modul
+        public function deleteModul($id)
+        {
+            $modul = ModulPembelajaran::findOrFail($id);
+
+            // Hapus file dari storage jika ada
+            if ($modul->file) {
+                Storage::disk('public')->delete($modul->file);
+            }
+
+            // Hapus gambar dari storage jika ada
+            if ($modul->image) {
+                Storage::disk('public')->delete($modul->image);
+            }
+
+            // Hapus modul dari database
+            $modul->delete();
+
+            return redirect()->route('admin.modulPembelajaran')->with('success', 'Modul berhasil dihapus!');
+        }
 }
