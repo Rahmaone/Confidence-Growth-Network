@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Private Chat</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <style>
+    {{-- <style>
         .chat-container {
             max-height: 500px;
             overflow-y: auto;
@@ -30,9 +30,12 @@
             padding: 10px 0;
             border-top: 1px solid #ddd;
         }
-    </style>
+    </style> --}}
 </head>
-<body>
+
+@section('page-specific-css')
+@endsection
+@section('content')
 <div class="container mt-4">
     <h2 class="text-center mb-4">{{ $mentor->name }}</h2>
 
@@ -112,5 +115,5 @@
         }
     });
 </script>
-</body>
+@endsection
 </html>

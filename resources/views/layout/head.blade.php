@@ -40,6 +40,7 @@
 {{-- icons --}}
 <link href="{{ asset('black') }}/css/nucleo-icons.css" rel="stylesheet" />
 
-<!-- Custom styles for this template -->
+<!-- Custom styles for certain pages-->
+@yield ('css')
 <!-- <link href="css/style.css" rel="stylesheet" /> -->
 
