@@ -1,9 +1,11 @@
+@extends('layout.app')
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat</title>
+    <title>Private Chat</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <style>
         .chat-container {
@@ -32,11 +34,11 @@
 </head>
 <body>
 <div class="container mt-4">
-    <h2 class="text-center mb-4">Chat Room</h2>
+    <h2 class="text-center mb-4">{{ $mentor->name }}</h2>
 
     <!-- Chat Messages Section -->
     <div id="chat-container" class="chat-container p-3 border rounded">
-        <!-- Pesan akan dimuat di sini secara dinamis -->
+        <!-- Messages will be dynamically loaded here -->
     </div>
 
     <!-- Input Section -->
@@ -52,48 +54,51 @@
     </div>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/stream-chat@7.1.0/dist/bundle.js"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', async function () {
         const client = new StreamChat("{{ $apiKey }}");
 
-        // Menghubungkan pengguna ke Stream.io
-        client.connectUser(
+        // Connect the user to Stream.io
+        await client.connectUser(
             {
                 id: "{{ $user->id }}",
                 name: "{{ $user->name }}",
-                image: "{{ $user->profile_image_url ?? 'https://via.placeholder.com/50' }}"
+                image: "{{ $user->profile_image_url ?? 'https://via.placeholder.com/50' }}",
+                role: "{{ $user->role }}"
             },
             "{{ $token }}"
         );
 
-        // Membuat saluran chat
-        const channel = client.channel('messaging', 'general', {
-            name: 'General Chat'
+        // Create or join a private channel
+        const channelId = `private_{{ $user->id }}_{{ $mentor->id }}`;
+        const channel = client.channel('messaging', channelId, {
+            name: `Private Chat with {{ $mentor->name }}`,
+            members: ["{{ $user->id }}", "{{ $mentor->id }}"]
         });
 
-        channel.watch().then(() => {
-            channel.state.messages.forEach(message => {
-                appendMessage(message.user.id, message.text);
-            });
+        await channel.watch();
+
+        // Load existing messages
+        channel.state.messages.forEach(message => {
+            appendMessage(message.user.id, message.text);
         });
 
-        // Mengirim pesan
+        // Handle form submission for sending messages
         const form = document.getElementById('chat-form');
-        form.addEventListener('submit', function (e) {
+        form.addEventListener('submit', async function (e) {
             e.preventDefault();
             const input = document.getElementById('message');
             const message = input.value.trim();
 
             if (message) {
-                channel.sendMessage({ text: message }).then(() => {
-                    appendMessage("{{ $user->id }}", message);
-                    input.value = '';
-                });
+                await channel.sendMessage({ text: message });
+                appendMessage("{{ $user->id }}", message);
+                input.value = '';
             }
         });
 
+        // Function to append messages to the chat container
         function appendMessage(userId, text) {
             const chatContainer = document.getElementById('chat-container');
             const messageDiv = document.createElement('div');
