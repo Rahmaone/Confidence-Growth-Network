@@ -90,7 +90,5 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
 
 
-
-
-Route::get('/chat/token', [StreamChatController::class, 'generateToken']);
+Route::post('/create-private-chat', [ChatController::class, 'createPrivateChat']);
 Route::post('/chat/channel', [StreamChatController::class, 'createChannel']);

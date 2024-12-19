@@ -118,7 +118,7 @@
                       <i class="fa fa-user" aria-hidden="true"></i>
                       Profil
                     </a>
-                    <a href="#">
+                    <a href="#" id="createChatLink" data-user-id="{{ Auth::user()->id }}" data-mentor-id="{{ $mentor->id }}">
                       <i class="fa fa-comments" aria-hidden="true"></i>
                       Chat
                     </a>
@@ -142,4 +142,8 @@
       </section>
 
 
+@endsection
+@section('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="{{ asset('User-depan/js/chat.js') }}"></script>
 @endsection
