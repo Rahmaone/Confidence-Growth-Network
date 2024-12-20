@@ -1,3 +1,5 @@
+import axios from "axios";
+
 document.querySelectorAll("#createChatLink").forEach((link) => {
     link.addEventListener("click", function (event) {
         event.preventDefault();
