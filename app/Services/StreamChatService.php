@@ -10,10 +10,15 @@ class StreamChatService
 
     public function __construct()
     {
+
+        protected $StreamChatService;
+        
         $this->client = new Client(
             config('services.stream.key'),
             config('services.stream.secret')
         );
+
+        $this->StreamChatService = $StreamChatService;
     }
 
     public function createUser($userId, $userData)

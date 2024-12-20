@@ -41,6 +41,6 @@
 <link href="{{ asset('black') }}/css/nucleo-icons.css" rel="stylesheet" />
 
 <!-- Custom styles for certain pages-->
-@yield ('css')
+@yield ('page-specific-css')
 <!-- <link href="css/style.css" rel="stylesheet" /> -->
 

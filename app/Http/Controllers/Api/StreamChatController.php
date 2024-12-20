@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use GetStream\StreamChat\Client;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use App\Services\StreamChatService;
 
 class StreamChatController extends Controller
 {
@@ -20,7 +21,7 @@ class StreamChatController extends Controller
         );
     }
 
-        public function chatmentor2()
+    public function chatmentor2()
     {
         $user = Auth::user(); // Mendapatkan pengguna yang sedang login
 

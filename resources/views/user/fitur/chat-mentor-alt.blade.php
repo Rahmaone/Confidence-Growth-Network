@@ -34,6 +34,7 @@
 </head>
 
 @section('page-specific-css')
+    <link rel="stylesheet" href="{{ asset('User-depan/css/style-chat.css') }}"
 @endsection
 @section('content')
 <div class="container mt-4">

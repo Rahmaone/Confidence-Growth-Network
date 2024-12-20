@@ -101,42 +101,43 @@
             <h1 class="">Our <span> Mentor</span></h1>
           </div>
           <div>
-          @foreach ($mentors as $mentor)
+          
           <div class="team_container">
             <div class="row">
-              <div class="col-lg-3 col-sm-6">
-                <div class="box">
-                  <div class="img-box">
-                    <img src="{{ asset('User-depan/images/team-1.jpg') }}" class="img1" alt="" />
-                  </div>
-                  <div class="detail-box">
-                    <h5>{{ $mentor->name }}</h5>
-                    <p>Spesialis Mental Health</p>
-                  </div>
-                  <div class="social_box" style="align-content: space-around; display:flex">
-                    <a href="#">
-                      <i class="fa fa-user" aria-hidden="true"></i>
-                      Profil
-                    </a>
-                    <a href="#" id="createChatLink" data-user-id="{{ Auth::user()->id }}" data-mentor-id="{{ $mentor->id }}">
-                      <i class="fa fa-comments" aria-hidden="true"></i>
-                      Chat
-                    </a>
-                    {{-- <a href="#">
-                      <i class="fa fa-linkedin" aria-hidden="true"></i>
-                    </a>
-                    <a href="#">
-                      <i class="fa fa-instagram" aria-hidden="true"></i>
-                    </a>
-                    <a href="#">
-                      <i class="fa fa-youtube-play" aria-hidden="true"></i>
-                    </a> --}}
+              @foreach ($mentors as $mentor)
+                <div class="col-lg-3 col-sm-6">
+                  <div class="box">
+                    <div class="img-box">
+                      <img src="{{ asset('User-depan/images/team-1.jpg') }}" class="img1" alt="" />
+                    </div>
+                    <div class="detail-box">
+                      <h5>{{ $mentor->name }}</h5>
+                      <p>Spesialis Mental Health</p>
+                    </div>
+                    <div class="social_box">
+                      <a href="#">
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                        Profil
+                      </a>
+                      <a href="#" id="createChatLink" data-user-id="{{ Auth::user()->id }}" data-mentor-id="{{ $mentor->id }}">
+                        <i class="fa fa-comments" aria-hidden="true"></i>
+                        Chat
+                      </a>
+                      {{-- <a href="#">
+                        <i class="fa fa-linkedin" aria-hidden="true"></i>
+                      </a>
+                      <a href="#">
+                        <i class="fa fa-instagram" aria-hidden="true"></i>
+                      </a>
+                      <a href="#">
+                        <i class="fa fa-youtube-play" aria-hidden="true"></i>
+                      </a> --}}
+                    </div>
                   </div>
                 </div>
-              </div>
+              @endforeach
             </div>
           </div>
-          @endforeach
           </div>
         </div>
       </section>
@@ -145,5 +146,5 @@
 @endsection
 @section('page-specific-scripts')
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="{{ asset('User-depan/js/chat.js') }}"></script>
+    <script src="{{ asset('User-depan/js/initialize_chat.js') }}"></script>
 @endsection
