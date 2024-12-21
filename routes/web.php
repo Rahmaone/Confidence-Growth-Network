@@ -71,8 +71,11 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 Route::middleware(['auth', 'role:user'])->group(function () {
     Route::prefix('user')->as('user.')->group(function () {
         Route::get('/chatmentor', [UserController::class, 'chatmentor'])->name('chatmentor');
-        Route::get('/chatmentor2', [StreamChatController::class, 'chatmentor2'])->name('chatmentor2');
         Route::get('/bukamodulPembelajaran', [userController::class, 'bukamodulPembelajaran'])->name('bukamodulPembelajaran');
+        
+        Route::post('/create-private-chat', [StreamChatController::class, 'createPrivateChat']);
+        Route::get('/check-private-chat/{channelId}', [StreamChatController::class, 'checkPrivateChat']);
+
     });
 });
 
@@ -91,3 +94,4 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
 
 Route::post('/create-private-chat', [StreamChatController::class, 'createPrivateChat']);
+Route::get('/check-private-chat/{channelId}', [StreamChatController::class, 'checkPrivateChat']);

@@ -67,4 +67,19 @@ class StreamChatController extends Controller
 
         return $this->StreamChatService->createChannel($request);
     }
+
+    public function checkPrivateChat($channelId)
+    {
+
+        try {
+            $channel = $this->client->Channel('messaging', $channelId);
+            $state = $channel->state();
+
+            return response()->json(['exists' => true]);
+        } catch (\StreamChat\Exceptions\StreamException $e) {
+            // Jika channel tidak ditemukan
+            return response()->json(['exists' => false]);
+        }
+    }
+
 }
