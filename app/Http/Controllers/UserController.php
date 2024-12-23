@@ -34,7 +34,8 @@ class UserController extends Controller
     public function chatmentor()
     {
         $mentors = User::where('role', 'mentor')->get(); // Ambil semua user dengan role mentor
-        return view('user.fitur.chat-mentor', compact('mentors'));
+        $users = User::where('role', 'user')->get(); // Ambil semua user dengan role mentor
+        return view('user.fitur.chat-mentor', compact('mentors', 'users'));
     }
 
 

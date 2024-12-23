@@ -131,20 +131,20 @@
 								@endforeach
 							@endif
 							@if(auth()->user()->role === 'mentor')
-								@foreach ($messages as $message)
+								@foreach ($users as $user)
 									<div class="col-lg-3 col-sm-6">
 										<div class="box">
 											<div class="img-box">
 												<img src="{{ asset('User-depan/images/team-1.jpg') }}" class="img1" alt="" />
 											</div>
 											<div class="detail-box">
-												<h5>{{ $mentor->name }}</h5>
+												<h5>{{ $user->name }}</h5>
 												<p>Insert message here</p>
 											</div>
 											<div class="social_box">
 												<a href="#">
 												</a>
-												<a href="#" id="createChatLink" data-user-id="{{ Auth::user()->id }}" data-mentor-id="{{ $mentor->id }}">
+												<a href="#" id="createChatLink" data-user-id="{{ Auth::user()->id }}" data-mentor-id="{{ $user->id }}">
 												<i class="fa fa-comments" aria-hidden="true"></i>
 													Chat
 												</a>
