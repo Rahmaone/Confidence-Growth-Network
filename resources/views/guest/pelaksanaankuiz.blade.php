@@ -9,13 +9,18 @@
 
 @section('content')
 <div class="container">
-    <div id="game" class="justify-center flex-column">
+    <div id="loader" class="loader"></div>
+    <div id="kuiz" class="justify-center flex-column hidden">
         <div id="hud">
             <div id="hud-item">
                 <p id="progressText" class="hud-prefix">Question</p>
                 <div id="progressBar">
                     <div id="progressBarFull"></div>
                 </div>
+            </div>
+            <div id="hud-item">
+                <p class="hud-prefix">Time Remaining</p>
+                <h1 class="hud-main-text" id="timer">30</h1>
             </div>
             <div id="hud-item">
                 <p class="hud-prefix">Score</p>
@@ -38,10 +43,6 @@
         <div class="choice-container">
             <p class="choice-prefix">D</p>
             <p class="choice-text" data-number="4">Choice 4</p>
-        </div>
-        <div id="hud-item" style="margin-top: 35px;">
-            <p class="hud-prefix">Time Remaining</p>
-            <h1 class="hud-main-text" id="timer">30</h1>
         </div>
     </div>
 </div>

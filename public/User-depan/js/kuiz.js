@@ -3,6 +3,8 @@ const choices = Array.from(document.getElementsByClassName("choice-text"));
 const progressText = document.getElementById("progressText");
 const scoreText = document.getElementById("score");
 const progressBarFull = document.getElementById("progressBarFull");
+const loader = document.getElementById('loader');
+const kuiz = document.getElementById('kuiz');
 let currentQuestion = {};
 let acceptingAnswers = false;
 let score = 0;
@@ -13,43 +15,56 @@ let timeRemaining = 30; // Waktu dalam detik untuk setiap pertanyaan
 let timerInterval;
 
 let questions = [
-  {
-    question: "Makanan apa yang paling enak di Indonesia?",
-    choice1: "Nasi Uduk",
-    choice2: "Ayam Sabana",
-    choice3: "Bakwan Jagung",
-    choice4: "Indomie Goreng",
-    answer: 4
-  },
-  {
-    question:
-      "What is the correct syntax for referring to an external script called 'xxx.js'?",
-    choice1: "<script href='xxx.js'>",
-    choice2: "<script name='xxx.js'>",
-    choice3: "<script src='xxx.js'>",
-    choice4: "<script file='xxx.js'>",
-    answer: 3
-  },
-  {
-    question: " How do you write 'Hello World' in an alert box?",
-    choice1: "msgBox('Hello World');",
-    choice2: "alertBox('Hello World');",
-    choice3: "msg('Hello World');",
-    choice4: "alert('Hello World');",
-    answer: 4
-  }
 ];
+
+fetch(
+    'https://opentdb.com/api.php?amount=10&category=17&difficulty=easy&type=multiple'
+)
+    .then((res) => {
+        return res.json();
+    })
+    .then((loadedQuestions) => {
+        questions = loadedQuestions.results.map((loadedQuestion) => {
+            const formattedQuestion = {
+                question: loadedQuestion.question,
+            };
+
+            const answerChoices = [...loadedQuestion.incorrect_answers];
+            formattedQuestion.answer = Math.floor(Math.random() * 4) + 1;
+            answerChoices.splice(
+                formattedQuestion.answer - 1,
+                0,
+                loadedQuestion.correct_answer
+            );
+
+            answerChoices.forEach((choice, index) => {
+                formattedQuestion['choice' + (index + 1)] = choice;
+            });
+
+            return formattedQuestion;
+        });
+        startkuiz();
+    })
+    .catch((err) => {
+        console.error(err);
+    });
 
 //CONSTANTS
 const CORRECT_BONUS = 10;
-const MAX_QUESTIONS = 3;
+const MAX_QUESTIONS = 10;
 
-startGame = () => {
+startkuiz = () => {
     questionCounter = 0;
     score = 0;
     availableQuesions = [...questions];
-    getNewQuestion();
-  };
+    loader.classList.remove('hidden');  // Tampilkan loader
+    kuiz.classList.add('hidden');
+    setTimeout(() => {
+      getNewQuestion();
+      loader.classList.add('hidden');  // Hapus loader setelah 3 detik
+      kuiz.classList.remove('hidden');
+    }, 1000); // Tunggu selama 3 detik
+};
   
   startTimer = () => {
     timeRemaining = 30; // Reset waktu untuk setiap pertanyaan
@@ -106,14 +121,24 @@ startGame = () => {
   
       if (classToApply === "correct") {
         incrementScore(CORRECT_BONUS);
+      } else {
+        // Tampilkan jawaban yang benar
+        const correctChoice = choices.find(
+          choice => choice.dataset["number"] == currentQuestion.answer
+        );
+        correctChoice.parentElement.classList.add("correct");
       }
   
       selectedChoice.parentElement.classList.add(classToApply);
   
       setTimeout(() => {
         selectedChoice.parentElement.classList.remove(classToApply);
+        const correctChoice = choices.find(
+          choice => choice.dataset["number"] == currentQuestion.answer
+        );
+        correctChoice.parentElement.classList.remove("correct");
         getNewQuestion();
-      }, 1000);
+      }, 1500); // Tambahkan jeda untuk menunjukkan jawaban yang benar
     });
   });
   
@@ -121,5 +146,3 @@ startGame = () => {
     score += num;
     scoreText.innerText = score;
   };
-  
-  startGame();
