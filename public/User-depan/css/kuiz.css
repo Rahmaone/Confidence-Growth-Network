@@ -1,0 +1,110 @@
+.choice-container {
+  display: flex;
+  margin-bottom: 0.5rem;
+  width: 100%;
+  font-size: 1.8rem;
+  border: 0.1rem solid rgb(86, 165, 235, 0.25);
+  background-color: #a8c0ae;
+  border-radius: 10px;
+}
+
+.choice-container:hover {
+  cursor: pointer;
+  box-shadow: 0 0.4rem 1.4rem 0 rgba(108, 251, 206, 0.5);
+  transform: translateY(-0.1rem);
+  transition: transform 150ms;
+}
+
+.choice-prefix {
+  padding: 1.5rem 2.5rem;
+  background-color: #4a7f57;
+  color: white;
+  border-radius: 10px;
+}
+
+.choice-text {
+  padding: 1.5rem;
+  width: 100%;
+  border-radius: 15px;
+  border-radius: 10px;
+}
+
+.correct {
+  background-color: #28a745;
+}
+
+.incorrect {
+  background-color: #dc3545;
+}
+
+/* HUD */
+
+#hud {
+  display: flex;
+  justify-content: space-between;
+  z-index: 1000;
+}
+
+.hud-prefix {
+  text-align: center;
+  font-size: 2rem;
+}
+
+#score {
+  color: #324838;
+}
+
+#timer {
+  color: #4a7f57;
+}
+
+.hud-main-text {
+  text-align: center;
+}
+
+#progressBar {
+  width: 20rem;
+  height: 4rem;
+  background-color: #bcdcc4;
+  border: 0.3rem solid #324838;
+  margin-top: 1.5rem;
+}
+
+#progressBarFull {
+  height: 3.6rem;
+  background-color: #4a7f57;
+  width: 0%;
+}
+
+#question {
+  font-size: 2rem; /* Ukuran default */
+  text-align: center;
+  word-wrap: break-word; /* Agar teks tetap berada dalam elemen */
+  line-height: 1.5;
+}
+
+.container {
+  word-wrap: break-word;
+}
+
+/* LOADER */
+.loader {
+  width: 120px;
+  height: 22px;
+  border-radius: 20px;
+  color: #419cc9;
+  border: 2px solid;
+  position: relative;
+}
+.loader::before {
+  content: "";
+  position: absolute;
+  margin: 2px;
+  inset: 0 100% 0 0;
+  border-radius: inherit;
+  background: currentColor;
+  animation: l6 3s infinite; /* Durasi animasi diubah menjadi 3 detik */
+}
+@keyframes l6 {
+    100% {inset:0}
+}

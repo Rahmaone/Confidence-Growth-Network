@@ -40,6 +40,34 @@ body {
     padding-bottom: 90px;
 }
 
+.containerhasil {
+    width: 100vw;
+    height: 50vh;
+    justify-content: center;
+    align-items: center;
+    max-width: 80rem;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+  
+  .containerhasil > * {
+    width: 100%;
+  }
+
+.flex-columnhasil {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-centerhasil {
+  justify-content: center;
+  align-items: center;
+}
+
+.marginkebawah {
+    margin-bottom: 75px;
+}
+
 .heading_container {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -61,6 +89,10 @@ body {
 }
 
 .heading_container h1 span {
+    color: #355e3b;
+}
+
+.heading_container h2 span {
     color: #355e3b;
 }
 

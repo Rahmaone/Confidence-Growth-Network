@@ -22,7 +22,6 @@ use App\Http\Controllers\Api\StreamChatController;
 
 Route::get('/', function () {
     return view('welcome');
-
 });
 
 Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
@@ -42,13 +41,13 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         // ->middleware('auth');
         // ['middleware' => 'auth'],
         Route::prefix('pages')->as('pages.')->group(function () {
-                Route::get('icons', [AdminController::class, 'icons'])->name('icons');
-                Route::get('maps', [AdminController::class, 'maps'])->name('maps');
-                Route::get('notifications', [AdminController::class, 'notifications'])->name('notifications');
-                Route::get('rtl', [AdminController::class, 'rtl'])->name('rtl');
-                Route::get('tables', [AdminController::class, 'tables'])->name('tables');
-                Route::get('typography', [AdminController::class, 'typography'])->name('typography');
-                Route::get('upgrade', [AdminController::class, 'upgrade'])->name('upgrade');
+            Route::get('icons', [AdminController::class, 'icons'])->name('icons');
+            Route::get('maps', [AdminController::class, 'maps'])->name('maps');
+            Route::get('notifications', [AdminController::class, 'notifications'])->name('notifications');
+            Route::get('rtl', [AdminController::class, 'rtl'])->name('rtl');
+            Route::get('tables', [AdminController::class, 'tables'])->name('tables');
+            Route::get('typography', [AdminController::class, 'typography'])->name('typography');
+            Route::get('upgrade', [AdminController::class, 'upgrade'])->name('upgrade');
         });
 
         Route::group([], function () {
@@ -83,7 +82,8 @@ Route::get('/home', [guestController::class, 'index'])->name('home');
 Route::get('/service', [guestController::class, 'service'])->name('service');
 Route::get('/service2', [guestController::class, 'chatmentor'])->name('chatmentor');
 Route::get('/service3', [guestController::class, 'kuiz'])->name('kuiz');
-
+Route::get('/service4', [guestController::class, 'pelaksanaankuiz'])->name('pelaksanaankuiz');
+Route::get('/service5', [guestController::class, 'hasilkuiz'])->name('hasilkuiz');
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
     // route ke halaman yang cuman bisa diakses admin dan mentor
@@ -91,6 +91,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 });
 
 
+Route::group(['middleware' => 'authuser'], function () {});
 
 
 Route::post('/create-private-chat', [StreamChatController::class, 'createPrivateChat']);
