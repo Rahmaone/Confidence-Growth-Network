@@ -14,28 +14,32 @@
     <span class=""> </span>
   </button>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" href="{{route('home')}}">Home</a>
-      </li>
-      <li class="nav-item">
-        <div class="dropdown">
-          <a
-            class="nav-link dropdown-toggle"
-            href="#"
-            role="button"
-            id="serviceDropdown"
-            data-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false">
-            Services
-          </a>
-          <div class="dropdown-menu" aria-labelledby="serviceDropdown">
-            <a class="dropdown-item" href="#">Modul Pembelajaran</a>
-            <a class="dropdown-item" href="#">Chat Mentor CGN</a>
-            <a class="dropdown-item" href="{{route('kuiz')}}">Kuis</a>
-            <a class="dropdown-item" href="#">Event</a>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="{{route('home')}}"
+            >Home</a
+          >
+        </li>
+        <li class="nav-item">
+          <div class="dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              href="#"
+              role="button"
+              id="serviceDropdown"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              Services
+            </a>
+            <div class="dropdown-menu" aria-labelledby="serviceDropdown">
+                <a class="dropdown-item" href="{{route('user.bukamodulPembelajaran')}}">Modul Pembelajaran</a>
+              <a class="dropdown-item" href="{{ route('user.chatmentor') }}">Chat Mentor CGN</a>
+              <a class="dropdown-item" href="{{route('kuiz')}}">Kuis</a>
+              <a class="dropdown-item" href="#">Event</a>
+            </div>
           </div>
         </div>
       </li>

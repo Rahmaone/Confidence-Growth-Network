@@ -1,0 +1,22 @@
+.chat-container {
+    max-height: 500px;
+    overflow-y: auto;
+}
+.chat-message {
+    border-bottom: 1px solid #f1f1f1;
+    padding: 10px;
+}
+.chat-message .user {
+    font-weight: bold;
+}
+.chat-message .text {
+    margin-top: 5px;
+}
+.message-input {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: #fff;
+    padding: 10px 0;
+    border-top: 1px solid #ddd;
+}

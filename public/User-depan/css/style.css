@@ -829,7 +829,7 @@ a:focus {
 
 .team_section .team_container .box .social_box a {
     color: #ffffff;
-    font-size: 22px;
+    font-size: 15px;
 }
 
 .team_section .team_container .box .social_box a:hover {
@@ -889,7 +889,7 @@ a:focus {
 .team_section2 .team_container .box .img-box img {
     width: 120px;
     border-radius: 100%;
-    border: 5px solid var(--hunter-green)\; /* Gunakan warna Hunter Green untuk border */
+    border: 5px solid var(--hunter-green) \;; /* Gunakan warna Hunter Green untuk border */
 }
 
 .team_section2 .team_container .box .detail-box {
