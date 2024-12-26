@@ -53,6 +53,8 @@
 
 @section ('page-specific-scripts')
 <script src="https://cdn.jsdelivr.net/npm/stream-chat@7.1.0/dist/bundle.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/stream-chat@6"></script>
+
 <script>
     
     document.addEventListener('DOMContentLoaded', async function () {
