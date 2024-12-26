@@ -31,7 +31,7 @@ class StreamChatService
     }
 
     /**
-     * Periksa atau buat pengguna di Stream.io.
+     * Periksa pengguna di Stream.io.
      */
     public function ensureStreamUserExists($user)
     {
@@ -66,31 +66,36 @@ class StreamChatService
 
     public function createStreamUser($user) 
     {
-        $this->client->upsertUser([
-            'id' => (string)$user->id,
-            'name' => $user->name,
-            'email' => $user->email,
-            'role' => $user->role,
-        ]);
-    }
-
-    public function createChannel(Request $request)
-    {
-        $channelId = $request->input('channel_id');
-        $members = $request->input('members');
-
-        if (!$channelId || !$members || count($members) < 2) {
-            return response()->json(['error' => 'Channel ID and at least two members are required'], 400);
-        }
-
         try {
-            $channel = $this->client->Channel('messaging', $channelId, ['members' => $members]);
-            $channel->create();
-
-            return response()->json(['message' => 'Channel created successfully']);
-        } catch (\Exception $e) {
-            \Log::error('Stream.io error: ' . $e->getMessage());
-            return response()->json(['error' => 'Failed to create channel'], 500);
+            $this->client->upsertUser([
+                'id' => (string)$user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'role' => $user->role,
+            ]);
+            return response()->json(['message' => 'User registered successfully']);
+        } catch (\Stream\Exceptions\StreamException $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+
+    public function createChannel($channelId, $members)
+    {
+        try {
+            $channel = $this->client->Channel('messaging', $channelId, [
+                'members' => $members
+            ]);
+            $channel->create(); // Buat channel baru di Stream API
+
+            return response()->json([
+                'message' => 'Channel created successfully!',
+                'channelId' => $channelId,
+            ]);
+        } catch (\Stream\Exceptions\StreamException $e) {
+            // Tangani kesalahan dari Stream API
+            \Log::error('StreamChat Error: ' . $e->getMessage());
+            return response()->json(['error' => 'Failed to create channel: ' . $e->getMessage()], 500);
+        }
+    }
+
 }

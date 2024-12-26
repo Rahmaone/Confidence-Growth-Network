@@ -36,19 +36,18 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="serviceDropdown">
                 <a class="dropdown-item" href="{{route('user.bukamodulPembelajaran')}}">Modul Pembelajaran</a>
-              <a class="dropdown-item" href="{{ route('user.chatmentor') }}">Chat Mentor CGN</a>
+              <a class="dropdown-item" href="{{ route('chat.chatmentor') }}">Chat Mentor CGN</a>
               <a class="dropdown-item" href="{{route('kuiz')}}">Kuis</a>
               <a class="dropdown-item" href="#">Event</a>
             </div>
           </div>
-        </div>
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" href="#about">About</a>
+        <a class="nav-link" href="#">About</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#team">Team</a>
+        <a class="nav-link" href="#">Team</a>
       </li>
       @auth
       <li class="nav-item">
