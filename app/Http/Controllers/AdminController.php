@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 use App\Models\ModulPembelajaran;
+use App\Models\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage; // Tambahkan ini
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
+
 class AdminController extends Controller
 {
     /**
@@ -201,4 +204,119 @@ class AdminController extends Controller
 
             return redirect()->route('admin.modulPembelajaran')->with('success', 'Modul berhasil dihapus!');
         }
+    
+    // Halaman daftar event (index)
+    public function eventAnnouncement()
+    {
+        $events = Event::all();
+        return view('admin.pages.Event_Announcement.eventAnnoucement', ['events' => $events]);
+    }
+
+    // Halaman buat event
+    public function buatEvent()
+    {
+        return view('admin.pages.Event_Announcement.createEvent');
+    }
+
+    // Proses simpan event baru
+    public function simpanEvent(Request $request)
+    {
+        $validated = $request->validate([
+            'nama' => 'required|string|max:255',
+            'mentor' => 'required|string|max:255',
+            'lokasi' => 'required|string|max:255',
+            'waktu_mulai' => 'required|date',
+            'waktu_selesai' => 'required|date',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'slug' => 'unique:events,slug' 
+        ]);
+
+        // Upload gambar jika ada
+        $gambarPath = null;
+        if ($request->hasFile('gambar')) {
+            $gambarPath = $request->file('gambar')->store('event_images', 'public');
+        }
+
+        // Membuat slug
+        $slug = Str::slug($validated['nama']);
+        $slugExists = Event::where('slug', $slug)->exists();
+
+        if ($slugExists) {
+            $slug = "{$slug}-" . time();
+        }
+
+        // Menyimpan data event ke database
+        Event::create([
+            'nama' => $validated['nama'],
+            'mentor' => $validated['mentor'],
+            'lokasi' => $validated['lokasi'],
+            'waktu_mulai' => $validated['waktu_mulai'],
+            'waktu_selesai' => $validated['waktu_selesai'],
+            'gambar' => $gambarPath,
+            'slug' => $slug,
+        ]);
+
+        return redirect()->route('admin.eventAnnouncement')->with('success', 'Event berhasil ditambahkan!');
+    }
+
+    // Halaman edit event
+    public function editEvent($id)
+    {
+        $event = Event::findOrFail($id);
+        return view('admin.pages.Event_Announcement.editEvent', ['event' => $event]);
+    }
+
+    // Proses update event baru
+    public function updateEvent(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'nama' => 'required|string|max:255',
+            'mentor' => 'required|string|max:255',
+            'lokasi' => 'required|string|max:255',
+            'waktu_mulai' => 'required|date',
+            'waktu_selesai' => 'required|date',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        // Temukan event berdasarkan ID
+        $event = Event::findOrFail($id);
+
+        // Upload gambar baru jika ada
+        $gambarPath = $event->gambar;
+        if ($request->hasFile('gambar')) {
+            // Hapus gambar lama jika ada
+            if ($gambarPath && Storage::disk('public')->exists($gambarPath)) {
+                Storage::disk('public')->delete($gambarPath);
+            }
+            $gambarPath = $request->file('gambar')->store('event_images', 'public');
+        }
+
+        // Update event
+        $event->update([
+            'nama' => $validated['nama'],
+            'mentor' => $validated['mentor'],
+            'lokasi' => $validated['lokasi'],
+            'waktu_mulai' => $validated['waktu_mulai'],
+            'waktu_selesai' => $validated['waktu_selesai'],
+            'gambar' => $gambarPath,
+        ]);
+
+        return redirect()->route('admin.eventAnnouncement')->with('success', 'Event berhasil diperbarui!');
+    }
+
+    // Proses delete event
+    public function deleteEvent($id)
+    {
+        $event = Event::findOrFail($id);
+
+        // Hapus gambar jika ada
+        if ($event->gambar && Storage::disk('public')->exists($event->gambar)) {
+            Storage::disk('public')->delete($event->gambar);
+        }
+
+        // Hapus event dari database
+        $event->delete();
+
+        return redirect()->route('admin.eventAnnouncement')->with('success', 'Event berhasil dihapus!');
+    }
 }
