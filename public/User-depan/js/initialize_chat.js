@@ -1,16 +1,47 @@
 document.querySelectorAll("#createChatLink").forEach((link) => {
     link.addEventListener("click", async function (event) {
         event.preventDefault();
+
         const userId = this.getAttribute("data-user-id");
         const mentorId = this.getAttribute("data-mentor-id");
         const channelId = `private_${userId}_${mentorId}`;
 
+        // Inisialisasi Stream Client
+        const client = StreamChat.getInstance("{{ api_key }}");
+
+        // Tentukan pengguna saat ini dan pengguna lainnya
+        let currentUser = {};
+        let otherUser = {};
+        try {
+            const currentRole = "{{ $currentUser->role }}"; // Periksa apakah ini user atau mentor
+            if (currentRole === "mentor") {
+                currentUser = await fetchUserDetails(mentorId);
+                otherUser = await fetchUserDetails(userId);
+            } else {
+                currentUser = await fetchUserDetails(userId);
+                otherUser = await fetchUserDetails(mentorId);
+            }
+        } catch (error) {
+            console.error("Failed to fetch user details:", error.message);
+            alert("Unable to initialize chat. Please try again.");
+            return;
+        }
+
         try {
             // Langkah 1: Periksa apakah pengguna terdaftar di Stream API
-            await checkOrRegisterUser(userId);
-            await checkOrRegisterUser(mentorId);
+            await checkOrRegisterUser(currentUser.id);
+            await checkOrRegisterUser(otherUser.id);
 
-            // Langkah 2: Periksa apakah channel sudah ada
+            // Langkah 2: Hubungkan pengguna ke Stream API
+            await client.connectUser(
+                {
+                    id: currentUser.id,
+                    name: currentUser.name,
+                },
+                currentUser.token
+            );
+
+            // Langkah 3: Periksa apakah channel sudah ada
             const checkResponse = await axios.get(
                 `/chat/check-private-chat/${channelId}`
             );
@@ -18,25 +49,15 @@ document.querySelectorAll("#createChatLink").forEach((link) => {
                 // Jika channel sudah ada, redirect ke halaman chat
                 window.location.href = `/chat/${channelId}`;
             } else {
-                // Jika channel belum ada, buat channel baru
-                // Mengirimkan permintaan POST untuk membuat private chat
-                const createResponse = await axios.post(
-                    "/chat/create-private-chat",
-                    {
-                        channel_id: channelId, // ID channel
-                        members: [userId, mentorId], // Daftar anggota
-                    }
-                );
+                // Langkah 4: Buat channel baru jika belum ada
+                const newChannel = client.channel("messaging", channelId, {
+                    name: `Private Chat with ${otherUser.name}`,
+                    members: [currentUser.id, otherUser.id],
+                });
+                await newChannel.create();
 
-                // Menangani respons dari server
-                if (createResponse.data.success) {
-                    alert(createResponse.data.message); // Tampilkan pesan sukses
-                    window.location.href = `/chat/${createResponse.data.channelId}`; // Redirect ke halaman chat
-                } else {
-                    alert(
-                        "Error creating channel: " + createResponse.data.error
-                    );
-                }
+                console.log("Channel created successfully, redirecting...");
+                window.location.href = `/chat/${channelId}`;
             }
         } catch (error) {
             console.error(error.response?.data?.error || error.message);
@@ -64,5 +85,19 @@ async function checkOrRegisterUser(userId) {
         throw new Error(
             `Failed to ensure user ${userId} is registered on Stream API.`
         );
+    }
+}
+
+// Fungsi untuk mengambil detail pengguna
+async function fetchUserDetails(userId) {
+    try {
+        const response = await axios.get(`/api/user-details/${userId}`);
+        return response.data;
+    } catch (error) {
+        console.error(
+            `Failed to fetch user details for ${userId}:`,
+            error.message
+        );
+        throw new Error("Unable to fetch user details.");
     }
 }
