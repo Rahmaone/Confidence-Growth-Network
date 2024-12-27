@@ -41,16 +41,16 @@
                 <div class="collapse show" id="events">
                     <ul class="nav pl-4">
                         <li>
-                            {{-- <a href="{{ route('admin.eventAnnouncement') }}">
+                            <a href="{{ route('admin.eventAnnouncement') }}">
                                 <i class="tim-icons icon-bullet-list-67"></i>
                                 <p>{{ __('Daftar Event') }}</p>
-                            </a> --}}
+                            </a>
                         </li>
                         <li>
-                            {{-- <a href="{{ route('admin.buatEvent') }}">
+                            <a href="{{ route('admin.buatEvent') }}">
                                 <i class="tim-icons icon-simple-add"></i>
                                 <p>{{ __('Tambah Event') }}</p>
-                            </a> --}}
+                            </a>
                         </li>
                     </ul>
                 </div>

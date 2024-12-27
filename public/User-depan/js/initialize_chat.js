@@ -91,7 +91,7 @@ async function checkOrRegisterUser(userId) {
 // Fungsi untuk mengambil detail pengguna
 async function fetchUserDetails(userId) {
     try {
-        const response = await axios.get(`/api/user-details/${userId}`);
+        const response = await axios.get(`/chat/user-details/${userId}`);
         return response.data;
     } catch (error) {
         console.error(

@@ -103,4 +103,29 @@ class UserController extends Controller
             return abort(500, 'Failed to initialize chat');
         }
     }
+
+    public function getUserDetails($userId)
+    {
+        try {
+            // Ambil data pengguna berdasarkan ID
+            $user = User::findOrFail($userId);
+
+            // Format data yang akan dikirimkan ke frontend
+            $userDetails = [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'role' => $user->role, // role: user atau mentor
+                'image_path' => $user->image_path, // URL gambar profil, opsional
+            ];
+
+            return response()->json($userDetails, 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'User not found or an error occurred.',
+                'message' => $e->getMessage(),
+            ], 404);
+        }
+    }
+
 }

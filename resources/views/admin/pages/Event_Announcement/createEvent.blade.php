@@ -24,7 +24,7 @@
                     @endif
 
                     {{-- Form Start --}}
-                    <form action="{{ route('admin.createEvent') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('admin.simpanEvent') }}" method="POST" enctype="multipart/form-data">
                         @csrf
 
                         <!-- Nama Event -->

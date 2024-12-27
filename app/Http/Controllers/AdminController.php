@@ -209,7 +209,7 @@ class AdminController extends Controller
     public function eventAnnouncement()
     {
         $events = Event::all();
-        return view('admin.pages.Event_Announcement.eventAnnoucement', ['events' => $events]);
+        return view('admin.pages.Event_Announcement.eventAnnouncement', ['events' => $events]);
     }
 
     // Halaman buat event
