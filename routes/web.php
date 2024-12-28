@@ -83,15 +83,8 @@ Route::middleware(['auth', 'role:user,mentor'])->group(function () {
     Route::prefix('chat')->as('chat.')->group(function () {
         Route::get('/chatmentor', [UserController::class, 'chatmentor'])->name('chatmentor');
 
-        Route::get('/getUserDetails/{userId}', [UserController::class, 'getUserDetails']);
-
-        Route::post('/create-private-chat', [StreamChatController::class, 'createPrivateChat']);
-        Route::get('/check-private-chat/{channelId}', [StreamChatController::class, 'checkPrivateChat']);
-        Route::get('/{channelId}', [UserController::class, 'showChat']);
-
-        Route::get('/check-user/{userId}', [StreamChatController::class, 'checkUser']);
-        Route::post('/register-user', [StreamChatController::class, 'registerUser']);
-
+        Route::get('/initializeChat/{otherId}', [UserController::class, 'initializeChat'])->name('initializeChat');
+        
     });
 });
 
@@ -109,7 +102,3 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
 
 Route::group(['middleware' => 'authuser'], function () {});
-
-
-Route::post('/create-private-chat', [StreamChatController::class, 'createPrivateChat']);
-Route::get('/check-private-chat/{channelId}', [StreamChatController::class, 'checkPrivateChat']);

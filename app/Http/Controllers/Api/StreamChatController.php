@@ -24,69 +24,28 @@ class StreamChatController extends Controller
         );
     }
 
-    public function chatmentor()
-    {
-        $user = Auth::user(); // Mendapatkan pengguna yang sedang login
+    // public function chatmentor()
+    // {
+    //     $user = Auth::user(); // Mendapatkan pengguna yang sedang login
 
-        try {
-            // Pastikan Stream.io Client sudah diinisialisasi
-            $this->StreamChatService->initializeStreamClient();
+    //     try {
+    //         // Pastikan Stream.io Client sudah diinisialisasi
+    //         $this->StreamChatService->initializeStreamClient();
 
-            // Periksa atau buat pengguna di Stream.io
-            $this->StreamChatService->ensureStreamUserExists($user);
+    //         // Periksa atau buat pengguna di Stream.io
+    //         $this->StreamChatService->ensureStreamUserExists($user);
 
-            // Buat token untuk pengguna
-            $token = $this->StreamChatService->createStreamToken($user->id);
+    //         // Buat token untuk pengguna
+    //         $token = $this->StreamChatService->createStreamToken($user->id);
 
-            // Kirimkan data ke view
-            return $this->StreamChatService->renderChatView($user, $token);
-        } catch (\Exception $e) {
-            // Tangani error
-            \Log::error('Stream.io error: ' . $e->getMessage());
-            return response()->json(['error' => 'Failed to initialize chat'], 500);
-        }
-    }
-
-    public function createPrivateChat(Request $request)
-    {
-        // Ambil channel_id dan members dari body request
-        $channelId = $request->input('channel_id'); // Ambil channel_id dari body request
-        $members = $request->input('members'); // Ambil members dari body request
-
-        // Cek apakah members valid (harus ada 2 member)
-        if (empty($members) || count($members) !== 2) {
-            return response()->json(['error' => 'Invalid members data'], 400);
-        }
-
-        // Cari user dan mentor berdasarkan ID yang dikirim
-        $user = User::find($members[0]);
-        $mentor = User::find($members[1]);
-
-        if (!$user || !$mentor) {
-            return response()->json(['error' => 'User or mentor not found'], 404);
-        }
-
-        try {
-            // Buat channel private menggunakan StreamChatService
-            $channel = $this->StreamChatService->createChannel($channelId, $members);
-
-            // Jika channel berhasil dibuat, kembalikan response sukses
-            return response()->json([
-                'success' => true,
-                'message' => 'Private channel created successfully',
-                'channelId' => $channelId,
-            ]);
-        } catch (\Exception $e) {
-            // Jika terjadi error saat membuat channel
-            \Log::error('Failed to create channel', [
-                'channelId' => $channelId,
-                'members' => $members,
-                'exception' => $e->getMessage(),
-            ]);
-
-            return response()->json(['error' => 'Failed to create channel'], 500);
-        }
-    }
+    //         // Kirimkan data ke view
+    //         return $this->StreamChatService->renderChatView($user, $token);
+    //     } catch (\Exception $e) {
+    //         // Tangani error
+    //         \Log::error('Stream.io error: ' . $e->getMessage());
+    //         return response()->json(['error' => 'Failed to initialize chat'], 500);
+    //     }
+    // }
 
 
 
@@ -180,7 +139,7 @@ class StreamChatController extends Controller
         ]);
 
         // Dapatkan data user dari database
-        $user = \App\Models\User::find($validated['user_id']);
+        $user = User::find($validated['user_id']);
 
         if (!$user) {
             return response()->json(['error' => 'User not found'], 404);
@@ -188,4 +147,38 @@ class StreamChatController extends Controller
 
         return $this->StreamChatService->createStreamUser($user);
     }
+
+    public function getOrCreateStreamToken($userId)
+    {
+        try {
+            // Ambil pengguna dari database
+            $user = User::findOrFail($userId);
+
+            // Jika token sudah ada, gunakan token tersebut
+            if ($user->stream_token) {
+                return response()->json(['token' => $user->stream_token], 200);
+            }
+
+            // Jika token belum ada, buat token baru
+            // $apiKey = config('stream.api_key');
+            // $apiSecret = config('stream.api_secret');
+            // $client = new Client($apiKey, $apiSecret);
+
+            $token = $this->StreamChatService->createToken($user->id);
+
+            // Simpan token ke database
+            $user->stream_token = $token;
+            $user->save();
+
+            return response()->json(['token' => $token], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Failed to generate token',
+                'message' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
 }
+
+

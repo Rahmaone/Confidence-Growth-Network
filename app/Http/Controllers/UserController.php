@@ -48,21 +48,28 @@ class UserController extends Controller
     public function chatmentor()
     {
         $mentors = User::where('role', 'mentor')->get(); // Ambil semua user dengan role mentor
-        $users = User::where('role', 'user')->get(); // Ambil semua user dengan role mentor
+        $users = User::where('role', 'user')->get(); // Ambil semua user dengan role user
         $currentUser = Auth::user();
+
+        if ($currentUser->role === 'mentor') {
+            // Mengambil semua percakapan dengan user yang terhubung
+            $conversations = $this->StreamChatService->getConversationsForMentor($currentUser);
+        }
+
         return view('user.fitur.chat-mentor', compact(
             'mentors', 
             'users', 
-            'currentUser'
+            'currentUser',
+            'conversations'
         ));
     }
 
-    public function showChat($userId)
+    public function initializeChat($otherId) 
     {
         $currentUser = Auth::user(); // Asumsikan pengguna yang login
-        $otherUser = User::find($userId); // Ambil data pengguna yang ingin diajak chat
+        $otherUser = User::find($otherId); // Ambil data pengguna yang ingin diajak chat
 
-        if (!$currentUser) {
+        if (!$currentUser || !$otherUser) {
             abort(404, 'User not found');
         }
 
@@ -74,10 +81,25 @@ class UserController extends Controller
             $user = $otherUser;
         }
 
-        // if (!$user || !$mentor) {
-        //     abort(404, 'User or mentor data is invalid');
-        // }
-        
+        $this->StreamChatService->ensureStreamUserExists($currentUser);
+        $this->StreamChatService->ensureStreamUserExists($otherUser);
+
+        $this->StreamChatService->createStreamToken($currentUser);
+
+        // Membuat ID channel
+        $channelId = 'private_' . $user->id . '_' . $mentor->id;
+
+        // Memeriksa apakah channel sudah ada
+        $existingChannel = $this->StreamChatService->getChannel($channelId);
+
+        if (!$existingChannel) {
+            // Jika channel tidak ada, buat channel baru
+            $currentUserId = strval($currentUser->id);
+            $otherUserId = strval($otherUser->id);
+
+            // Membuat channel baru
+            $this->StreamChatService->createChannel($channelId, $currentUserId, $otherUserId);
+        }
 
         try {
             \Log::info('Show Chat Debug', [
@@ -88,12 +110,12 @@ class UserController extends Controller
             ]);
             // Buat token Stream Chat untuk mentor
             $token = $this->client->createToken((string)$currentUser->id);
-            
 
             return view('user.fitur.UI_chat', [
                 'currentUser' => $currentUser,
                 'otherUser' => $otherUser,
-                'apiKey' => config('stream.api_key'),
+                'channelId' => $channelId,
+                'apiKey' => env('STREAM_API_KEY'),
                 'token' => $token,
                 'user' => $user,
                 'mentor' => $mentor,
@@ -103,29 +125,4 @@ class UserController extends Controller
             return abort(500, 'Failed to initialize chat');
         }
     }
-
-    public function getUserDetails($userId)
-    {
-        try {
-            // Ambil data pengguna berdasarkan ID
-            $user = User::findOrFail($userId);
-
-            // Format data yang akan dikirimkan ke frontend
-            $userDetails = [
-                'id' => $user->id,
-                'name' => $user->name,
-                'email' => $user->email,
-                'role' => $user->role, // role: user atau mentor
-                'image_path' => $user->image_path, // URL gambar profil, opsional
-            ];
-
-            return response()->json($userDetails, 200);
-        } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'User not found or an error occurred.',
-                'message' => $e->getMessage(),
-            ], 404);
-        }
-    }
-
 }

@@ -1,35 +1,35 @@
-@extends ('layout.app')
+@extends('layout.app')
 
-@section ('page-specific-style')
-    <style>
-        .chat-container {
-            max-height: 500px;
-            overflow-y: auto;
-        }
-        .chat-message {
-            border-bottom: 1px solid #f1f1f1;
-            padding: 10px;
-        }
-        .chat-message .user {
-            font-weight: bold;
-        }
-        .chat-message .text {
-            margin-top: 5px;
-        }
-        .message-input {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            background: #fff;
-            padding: 10px 0;
-            border-top: 1px solid #ddd;
-        }
-    </style>
+@section('page-specific-style')
+<style>
+    .chat-container {
+        max-height: 500px;
+        overflow-y: auto;
+    }
+    .chat-message {
+        border-bottom: 1px solid #f1f1f1;
+        padding: 10px;
+    }
+    .chat-message .user {
+        font-weight: bold;
+    }
+    .chat-message .text {
+        margin-top: 5px;
+    }
+    .message-input {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        background: #fff;
+        padding: 10px 0;
+        border-top: 1px solid #ddd;
+    }
+</style>
 @endsection
-@section ('content')
 
+@section('content')
 <div class="container mt-4">
-    <h2 class="text-center mb-4">Chat with {{ $user->name }}</h2>
+    <h2 class="text-center mb-4">Chat with {{ $otherUser->name }}</h2>
 
     <!-- Chat Messages Section -->
     <div id="chat-container" class="chat-container p-3 border rounded">
@@ -48,50 +48,37 @@
         </form>
     </div>
 </div>
-
 @endsection
 
-@section ('page-specific-scripts')
-<script src="https://cdn.jsdelivr.net/npm/stream-chat@7.1.0/dist/bundle.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/stream-chat@6"></script>
+@section('page-specific-scripts')
+<script src="
+https://cdn.jsdelivr.net/npm/stream-chat@8.49/dist/browser.full-bundle.min.js
+"></script>
 
 <script>
-    
     document.addEventListener('DOMContentLoaded', async function () {
+
+
+        // Initialize Stream Chat client
         const client = new StreamChat("{{ $apiKey }}");
 
-        // Determine the role of the current user (mentor or user)
-        const currentUser = {
-            id: "{{ $currentUser->id }}",
-            name: "{{ $currentUser->name }}",
-            image: "{{ $currentUser->profile_image_url ?? 'https://via.placeholder.com/50' }}",
-            role: "{{ $currentUser->role }}"
-        };
+        // Connect the current user
+        await client.connectUser(
+            {
+                id: "{{ $currentUser->id }}",
+                name: "{{ $currentUser->name }}",
+                image: "{{ $currentUser->profile_image_url ?? 'https://via.placeholder.com/50' }}"
+            },
+            "{{ $token }}"
+        );
 
-        // Connect the current user to Stream.io
-        await client.connectUser(currentUser, "{{ $token }}");
+        // Join the existing channel
+        const channel = client.channel('messaging', "{{ $channelId }}");
 
-        const user = @json($user ?? null);
-        const mentor = @json($mentor ?? null);
-        const otherUser = @json($otherUser ?? null);
-
-        // Create or join a private channel
-        if (!user || !mentor) {
-            console.error("User or mentor data is missing");
-            alert("Chat cannot be initialized because user or mentor data is missing.");
-        } else {
-            const channelId = `private_${user.id}_${mentor.id}`;
-            const channel = client.channel('messaging', channelId, {
-                name: `Private Chat with ${otherUser.name}`,
-                members: [user.id, mentor.id]
-            });
-
-            console.log("Channel initialized:", channel);
-        }
-
+        // Watch the channel for updates
         await channel.watch();
 
-        // Load existing messages
+        // Load existing messages and append to the chat container
         channel.state.messages.forEach(message => {
             appendMessage(message.user.id, message.text);
         });
@@ -104,9 +91,15 @@
             const message = input.value.trim();
 
             if (message) {
-                await channel.sendMessage({ text: message });
-                appendMessage(currentUser.id, message);
-                input.value = '';
+                try {
+                    await channel.sendMessage(
+                        { text: message }
+                    );
+                    appendMessage("{{ $currentUser->id }}", message);
+                    input.value = '';
+                } catch (error) {
+                    console.error('Failed to send message:', error);
+                }
             }
         });
 
@@ -116,7 +109,7 @@
             const messageDiv = document.createElement('div');
             messageDiv.className = 'chat-message';
             messageDiv.innerHTML = `
-                <div class="user">${userId === currentUser.id ? 'You' : userId}</div>
+                <div class="user">${userId === "{{ $currentUser->id }}" ? 'You' : 'User ' + userId}</div>
                 <div class="text">${text}</div>
             `;
             chatContainer.appendChild(messageDiv);
