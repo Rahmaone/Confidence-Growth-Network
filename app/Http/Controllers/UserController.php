@@ -48,19 +48,33 @@ class UserController extends Controller
     public function chatmentor()
     {
         $mentors = User::where('role', 'mentor')->get(); // Ambil semua user dengan role mentor
-        $users = User::where('role', 'user')->get(); // Ambil semua user dengan role user
         $currentUser = Auth::user();
 
-        if ($currentUser->role === 'mentor') {
-            // Mengambil semua percakapan dengan user yang terhubung
-            $conversations = $this->StreamChatService->getConversationsForMentor($currentUser);
+        // Step 1: Ambil ID mentor dan channel percakapan
+        $currentUserId = $currentUser->id; // Format ID mentor di GetStream
+        $channels = $this->client->queryChannels([
+            'type' => 'messaging',
+            'members' => ['$in' => [strval($currentUserId)]],
+        ]);
+
+        // Step 2: Ambil daftar user_id dari percakapan
+        $userIdsWithConversation = [];
+        foreach ($channels['channels'] as $channel) {
+            foreach ($channel['members'] as $member) {
+                if ($member['user_id'] !== $currentUserId) {
+                    $userIdsWithConversation[] = $member['user_id'];
+                }
+            }
         }
+
+        // Step 3: Filter pengguna berdasarkan daftar user_id
+        $users = User::whereIn('id', $userIdsWithConversation)->get();
 
         return view('user.fitur.chat-mentor', compact(
             'mentors', 
             'users', 
             'currentUser',
-            'conversations'
+            'channels'
         ));
     }
 

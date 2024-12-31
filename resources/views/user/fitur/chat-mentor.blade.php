@@ -138,37 +138,29 @@
 							@if(auth()->user()->role === 'mentor')
 								@foreach ($users as $user)
 									@php
-										// Memeriksa apakah ada percakapan dengan mentor
-										$conversationExists = isset($conversations[$user->id]) && $conversations[$user->id]->messages->isNotEmpty();
+										$channel = collect($channels['channels'])->firstWhere('members', fn($members) => in_array($user->id, array_column($members, 'user_id')));
+										$lastMessage = $channel['messages'][0]['text'] ?? 'No messages yet';
 									@endphp
 
-									@if($conversationExists)
-										<div class="col-lg-3 col-sm-6">
-											<div class="box">
-												<div class="img-box">
-													<img src="{{ asset('User-depan/images/team-1.jpg') }}" class="img1" alt="" />
-												</div>
-												<div class="detail-box">
-													<h5>{{ $user->name }}</h5>
-													<p>
-														@if(isset($conversations[$user->id]))
-															{{ $conversations[$user->id]->lastMessage->text }}  <!-- Menampilkan pesan terakhir -->
-														@else
-															No messages yet
-														@endif
-													</p>
-												</div>
-												<div class="social_box">
-													<a href="#"></a>
-													<a href="{{ route('chat.initializeChat', ['otherId' => $mentor->id]) }}">
-														<i class="fa fa-comments" aria-hidden="true"></i> 
-														Chat
-													</a>
-													<a href="#"></a>
-												</div>
+									<div class="col-lg-3 col-sm-6">
+										<div class="box">
+											<div class="img-box">
+												<img src="{{ asset('User-depan/images/team-1.jpg') }}" class="img1" alt="" />
+											</div>
+											<div class="detail-box">
+												<h5>{{ $user->name }}</h5>
+												<p>{{ $lastMessage }}</p>
+											</div>
+											<div class="social_box">
+												<a href="#"></a>
+												<a href="{{ route('chat.initializeChat', ['otherId' => $user->id]) }}">
+													<i class="fa fa-comments" aria-hidden="true"></i>
+													Chat
+												</a>
+												<a href="#"></a>
 											</div>
 										</div>
-									@endif
+									</div>
 								@endforeach
 							@endif
 						@endauth
