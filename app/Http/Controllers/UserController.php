@@ -61,7 +61,7 @@ class UserController extends Controller
         $userIdsWithConversation = [];
         foreach ($channels['channels'] as $channel) {
             foreach ($channel['members'] as $member) {
-                if ($member['user_id'] !== $currentUserId) {
+                if (($member['user_id'] !== $currentUserId)) {
                     $userIdsWithConversation[] = $member['user_id'];
                 }
             }

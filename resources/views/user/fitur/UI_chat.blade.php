@@ -109,7 +109,7 @@ https://cdn.jsdelivr.net/npm/stream-chat@8.49/dist/browser.full-bundle.min.js
             const messageDiv = document.createElement('div');
             messageDiv.className = 'chat-message';
             messageDiv.innerHTML = `
-                <div class="user">${userId === "{{ $currentUser->id }}" ? 'You' : 'User ' + userId}</div>
+                <div class="user">${userId === "{{ $currentUser->id }}" ? 'You' : "{{ $otherUser->name }}"}</div>
                 <div class="text">${text}</div>
             `;
             chatContainer.appendChild(messageDiv);
