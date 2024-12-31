@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Storage; // Tambahkan ini
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 
+
 class AdminController extends Controller
 {
     /**
@@ -121,90 +122,72 @@ class AdminController extends Controller
         return redirect()->route('admin.modulPembelajaran')->with('success', 'Modul berhasil diupload!');
     }
 
-        public function editModul($id)
-        {
-            $modul = ModulPembelajaran::findOrFail(id: $id); // Cari modul berdasarkan ID
-            return view('admin.pages.Modul_Pembelajaran.editModul', compact('modul')); // Tampilkan halaman edit
+    public function editModul($id)
+    {
+        // Cari modul berdasarkan ID
+        $modul = ModulPembelajaran::findOrFail($id);
+
+        // Tampilkan halaman edit
+        return view('admin.pages.Modul_Pembelajaran.edit', compact('modul'));
+    }
+
+    // Fungsi untuk membuat slug unik
+    public function createSlug($title)
+    {
+        $slug = Str::slug($title); // Membuat slug dasar
+        $existingSlugs = ModulPembelajaran::where('slug', 'LIKE', "$slug%")
+            ->pluck('slug'); // Ambil slug yang mirip
+
+        // Tambahkan angka jika slug sudah ada
+        $counter = 1;
+        $originalSlug = $slug;
+        while ($existingSlugs->contains($slug)) {
+            $slug = "$originalSlug-" . $counter++;
         }
 
-        // Fungsi untuk membuat slug unik
-        public function createSlug($title)
-        {
-            $slug = Str::slug($title); // Membuat slug dasar
-            $existingSlugs = ModulPembelajaran::where('slug', 'LIKE', "{$slug}%")->pluck('slug'); // Ambil slug yang mirip
+        return $slug;
+    }
 
-            // Tambahkan angka jika slug sudah ada
-            $counter = 1;
-            $originalSlug = $slug;
-            while ($existingSlugs->contains($slug)) {
-                $slug = "{$originalSlug}-" . $counter++;
-            }
+    // Fungsi untuk memperbarui modul
+    public function updateModul(Request $request, $id)
+    {
+        // Validasi input
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'file' => 'nullable|file|mimes:pdf,doc,docx|max:10240',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
 
-            return $slug;
-        }
+        // Temukan modul berdasarkan ID
+        $modul = ModulPembelajaran::findOrFail($id);
 
-        // Fungsi untuk memperbarui modul
-        public function updateModul(Request $request, $id)
-        {
-            // Validasi input
-            $validated = $request->validate([
-                'title' => 'required|string|max:255',
-                'description' => 'required|string',
-                'file' => 'nullable|file|mimes:pdf,doc,docx|max:10240',
-                'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi gambar
-            ]);
-
-            // Temukan modul berdasarkan ID
-            $modul = ModulPembelajaran::findOrFail($id);
-
-            // Cek apakah ada file yang diunggah
-            if ($request->hasFile('file')) {
-                if ($modul->file) {
-                    Storage::disk('public')->delete($modul->file);
-                }
-                $filePath = $request->file('file')->store('modul_pembelajaran', 'public');
-                $modul->update(['file' => $filePath]);
-            }
-
-            // Cek apakah ada gambar yang diunggah
-            if ($request->hasFile('image')) {
-                if ($modul->image) {
-                    Storage::disk('public')->delete($modul->image);
-                }
-                $imagePath = $request->file('image')->store('modul_images', 'public');
-                $modul->update(['image' => $imagePath]);
-            }
-
-            // Update data lainnya
-            $modul->update([
-                'title' => $validated['title'],
-                'description' => $validated['description'],
-            ]);
-
-            return redirect()->route('admin.modulPembelajaran')->with('success', 'Modul berhasil diperbarui!');
-        }
-
-        // Fungsi untuk menghapus modul
-        public function deleteModul($id)
-        {
-            $modul = ModulPembelajaran::findOrFail($id);
-
-            // Hapus file dari storage jika ada
+        // Cek apakah ada file yang diunggah
+        if ($request->hasFile('file')) {
             if ($modul->file) {
                 Storage::disk('public')->delete($modul->file);
             }
+            $filePath = $request->file('file')->store('modul_pembelajaran', 'public');
+            $modul->file = $filePath;
+        }
 
-            // Hapus gambar dari storage jika ada
+        // Cek apakah ada gambar yang diunggah
+        if ($request->hasFile('image')) {
             if ($modul->image) {
                 Storage::disk('public')->delete($modul->image);
             }
-
-            // Hapus modul dari database
-            $modul->delete();
-
-            return redirect()->route('admin.modulPembelajaran')->with('success', 'Modul berhasil dihapus!');
+            $imagePath = $request->file('image')->store('modul_images', 'public');
+            $modul->image = $imagePath;
         }
-    
+
+        // Update data lainnya
+        $modul->title = $validated['title'];
+        $modul->description = $validated['description'];
+        $modul->save();
+
+        return redirect()->route('admin.modulPembelajaran')->with('success', 'Modul berhasil diperbarui!');
+    }
+
     // Halaman daftar event (index)
     public function eventAnnouncement()
     {
@@ -228,7 +211,7 @@ class AdminController extends Controller
             'waktu_mulai' => 'required|date',
             'waktu_selesai' => 'required|date',
             'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'slug' => 'unique:events,slug' 
+            'slug' => 'unique:events,slug'
         ]);
 
         // Upload gambar jika ada
