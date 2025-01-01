@@ -83,8 +83,6 @@ Route::get('/home', [guestController::class, 'index'])->name('home');
 Route::get('/service', [guestController::class, 'service'])->name('service');
 Route::get('/service2', [guestController::class, 'chatmentor'])->name('chatmentor');
 Route::get('/service3', [guestController::class, 'kuiz'])->name('kuiz');
-Route::get('/service4', [guestController::class, 'pelaksanaankuiz'])->name('pelaksanaankuiz');
-Route::get('/service5', [guestController::class, 'hasilkuiz'])->name('hasilkuiz');
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
     // route ke halaman yang cuman bisa diakses admin dan mentor
