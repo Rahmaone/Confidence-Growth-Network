@@ -29,8 +29,6 @@ Route::post('login', [LoginController::class, 'login']);
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 Route::post('register', [RegisterController::class, 'register'])->name('register');
 
-
-
 // Auth::routes();
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::prefix('admin')->as('admin.')->group(function () {
@@ -57,25 +55,38 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
             Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
         });
 
+        Route::get('eventAnnouncement', [AdminController::class, 'eventAnnouncement'])->name('eventAnnouncement'); // Halaman daftar event (index)
+        Route::get('eventAnnouncement/create', [AdminController::class, 'buatEvent'])->name('buatEvent'); // Halaman buat event
+        Route::post('eventAnnouncement/store', [AdminController::class, 'simpanEvent'])->name('simpanEvent'); // Proses simpan event baru
+        Route::get('eventAnnouncement/{id}/edit', [AdminController::class, 'editEvent'])->name('editEvent'); // Halaman edit event
+        Route::put('eventAnnouncement/{id}/update', [AdminController::class, 'updateEvent'])->name('updateEvent'); // Proses update event baru
+        Route::delete('eventAnnouncement/{id}/delete', [AdminController::class, 'deleteEvent'])->name('deleteEvent'); // Proses delete event
 
         Route::get('modulPembelajaran', [AdminController::class, 'modulPembelajaran'])->name('modulPembelajaran'); // Halaman daftar modul
         Route::get('modulPembelajaran/create', [AdminController::class, 'buatModul'])->name('buatModul'); // Halaman buat modul
         Route::post('modulPembelajaran/store', [AdminController::class, 'createModul'])->name('createModul'); // Proses simpan modul baru
         Route::get('modulPembelajaran/{id}/editModul', [AdminController::class, 'editModul'])->name('editModul'); // Halaman edit modul
-        Route::put('modulPembelajaran/{id}/update', [AdminController::class, 'updateModul'])->name('updateModul'); // Proses simpan modul baru
-        Route::delete('modulPembelajaran/{id}/delete', [AdminController::class, 'deleteModul'])->name('deleteModul'); // Proses delete modul baru
+
+        Route::put('modulPembelajaran/{id}/update', [AdminController::class, 'updateModul'])->name('updateModul');// Proses update modul baru
+        Route::delete('modulPembelajaran/{id}/delete', [AdminController::class, 'deleteModul'])->name('deleteModul');// Proses delete modul baru
+
     });
 });
 
 Route::middleware(['auth', 'role:user'])->group(function () {
     Route::prefix('user')->as('user.')->group(function () {
-        Route::get('/chatmentor', [UserController::class, 'chatmentor'])->name('chatmentor');
         Route::get('/bukamodulPembelajaran', [userController::class, 'bukamodulPembelajaran'])->name('bukamodulPembelajaran');
-
-        Route::post('/create-private-chat', [StreamChatController::class, 'createPrivateChat']);
-        Route::get('/check-private-chat/{channelId}', [StreamChatController::class, 'checkPrivateChat']);
         Route::get('/pelaksanaankuiz', [UserController::class, 'pelaksanaankuiz'])->name('pelaksanaankuiz');
         Route::get('/hasilkuiz', [UserController::class, 'hasilkuiz'])->name('hasilkuiz');
+    });
+});
+
+Route::middleware(['auth', 'role:user,mentor'])->group(function () {
+    Route::prefix('chat')->as('chat.')->group(function () {
+        Route::get('/chatmentor', [UserController::class, 'chatmentor'])->name('chatmentor');
+
+        Route::get('/initializeChat/{otherId}', [UserController::class, 'initializeChat'])->name('initializeChat');
+
     });
 });
 
@@ -91,7 +102,3 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
 
 Route::group(['middleware' => 'authuser'], function () {});
-
-
-Route::post('/create-private-chat', [StreamChatController::class, 'createPrivateChat']);
-Route::get('/check-private-chat/{channelId}', [StreamChatController::class, 'checkPrivateChat']);

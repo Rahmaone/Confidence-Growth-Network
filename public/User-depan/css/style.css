@@ -48,20 +48,20 @@ body {
     max-width: 80rem;
     margin: 0 auto;
     padding: 2rem;
-  }
-  
-  .containerhasil > * {
+}
+
+.containerhasil > * {
     width: 100%;
-  }
+}
 
 .flex-columnhasil {
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 
 .flex-centerhasil {
-  justify-content: center;
-  align-items: center;
+    justify-content: center;
+    align-items: center;
 }
 
 .marginkebawah {
@@ -815,6 +815,10 @@ a:focus {
     color: #ffffff; /* Gunakan warna Hunter Green untuk judul */
     font-weight: 600;
     position: relative;
+}
+
+.team_section .team_container .box .detail-box p {
+    color: #000000;
 }
 
 .team_section .team_container .box .social_box {

@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use GetStream\StreamChat\Client;
+use GetStream\StreamChat\StreamChat;
 use Illuminate\Http\Request;
 
 class StreamChatService
@@ -23,7 +24,7 @@ class StreamChatService
     public function initializeStreamClient()
     {
         if (!$this->client) {
-            $this->client = new \GetStream\StreamChat\Client(
+            $this->client = new Client(
                 config('stream.api_key'),
                 config('stream.api_secret')
             );
@@ -31,7 +32,7 @@ class StreamChatService
     }
 
     /**
-     * Periksa atau buat pengguna di Stream.io.
+     * Periksa pengguna di Stream.io.
      */
     public function ensureStreamUserExists($user)
     {
@@ -66,31 +67,104 @@ class StreamChatService
 
     public function createStreamUser($user) 
     {
-        $this->client->upsertUser([
-            'id' => (string)$user->id,
-            'name' => $user->name,
-            'email' => $user->email,
-            'role' => $user->role,
-        ]);
-    }
-
-    public function createChannel(Request $request)
-    {
-        $channelId = $request->input('channel_id');
-        $members = $request->input('members');
-
-        if (!$channelId || !$members || count($members) < 2) {
-            return response()->json(['error' => 'Channel ID and at least two members are required'], 400);
-        }
-
         try {
-            $channel = $this->client->Channel('messaging', $channelId, ['members' => $members]);
-            $channel->create();
-
-            return response()->json(['message' => 'Channel created successfully']);
-        } catch (\Exception $e) {
-            \Log::error('Stream.io error: ' . $e->getMessage());
-            return response()->json(['error' => 'Failed to create channel'], 500);
+            $this->client->upsertUser([
+                'id' => (string)$user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'role' => $user->role,
+            ]);
+            return response()->json(['message' => 'User registered successfully']);
+        } catch (\Stream\Exceptions\StreamException $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+
+    public function createChannel($channelId, $currentUserId, $otherUserId,)
+    {
+        try {
+            $channel = $this->client->Channel(
+                'messaging', 
+                $channelId, 
+                ['members' => [$currentUserId, $otherUserId]]
+            );
+            $channel->create($currentUserId);
+
+            return response()->json([
+                'message' => 'Channel created successfully!',
+            ]);
+        } catch (\Stream\Exceptions\StreamException $e) {
+            // Tangani kesalahan dari Stream API
+            \Log::error('StreamChat Error: ' . $e->getMessage());
+            return response()->json(['error' => 'Failed to create channel: ' . $e->getMessage()], 500);
+        }
+    }
+
+    public function getChannel($channelId)
+    {
+        try {
+            // Ambil channel berdasarkan ID
+            $channel = $this->client->Channel('messaging', $channelId);
+            
+            // Query untuk memverifikasi keberadaan channel
+            $response = $channel->query([
+                'state' => true,
+                'watch' => false,
+                'presence' => false,
+            ]);
+
+            // Kembalikan channel jika ditemukan
+            return $response;
+        } catch (\Exception $e) {
+            // Tangkap error jika channel tidak ditemukan atau query gagal
+            \Log::error('Channel not found or error occurred: ' . $e->getMessage());
+            return null;
+        }
+    }
+
+    public function getConversationsForMentor($mentor)
+    {
+        // Pastikan mentor terhubung dengan Stream API
+        $client = new StreamChat(config('stream.api_key'));
+        $client->connectUser($mentor, $mentor->stream_token);
+
+        // Ambil daftar channel di mana mentor menjadi anggota
+        $channels = $client->queryChannels([
+            'members' => [$mentor->id],
+        ]);
+
+        $conversations = [];
+
+        foreach ($channels as $channel) {
+            // Menyaring hanya channel yang berisi mentor dan user
+            $members = $channel->state->members;
+            $user = null;
+
+            // Temukan user yang terhubung di channel
+            foreach ($members as $member) {
+                if ($member['id'] !== $mentor->id) {
+                    $user = $member;
+                    break;
+                }
+            }
+
+            // Jika ditemukan user, ambil pesan terakhir
+            if ($user) {
+                // Ambil pesan terakhir dari channel
+                $lastMessage = $channel->state->messages->last();
+
+                // Menyimpan percakapan dalam array dengan informasi tentang user dan pesan terakhir
+                $conversations[$user['id']] = [
+                    'user' => $user,
+                    'lastMessage' => $lastMessage,
+                    'channel' => $channel
+                ];
+            }
+        }
+
+        return $conversations;
+    }
+
+
+
 }

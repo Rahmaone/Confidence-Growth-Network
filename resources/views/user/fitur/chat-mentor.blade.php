@@ -1,5 +1,7 @@
 @extends('layout.app')
 
+
+
 @section('content')
 
     <div class="hero_area">
@@ -72,8 +74,8 @@
 										
 										</h1>
 										<p>
-										Di sini pengguna dapat berkonsultasi dengan mentor kami yang profesional guna memastikan
-										pengguna merasakan pengalaman pelayanan konsultasi terbaik dari kami
+											Di sini pengguna dapat berkonsultasi dengan mentor kami yang profesional guna memastikan
+											pengguna merasakan pengalaman pelayanan konsultasi terbaik dari kami
 										</p>
 									</div>
 								</div>
@@ -98,15 +100,27 @@
 	<section id="team" class="team_section layout_padding">
 		<div class="container-fluid">
 			<div class="heading_container heading_center">
-				<h1 class="">Our <span> Mentor</span></h1>
+				@if(auth()->user()->role === 'user' || auth()->user()->role === 'admin')
+					<h1 class="">Our <span> Mentor</span></h1>
+				@endif
+				@if(auth()->user()->role === 'mentor')
+					<h1 class="">Your <span> Inbox</span></h1>
+				@endif
 			</div>
 			<div>
 			
 				<div class="team_container">
 					<div class="row">
 						@auth
-							@if(auth()->user()->role === 'user' || 'admin')
+							@if(auth()->user()->role === 'user' || auth()->user()->role === 'admin')
 								@foreach ($mentors as $mentor)
+									@php
+										$channel = collect($channels['channels'])->firstWhere('members', fn($members) => in_array($mentor->id, array_column($members, 'user_id')));
+										$lastMessage = $channel['messages'][1]['text'] ?? 'No messages yet';
+										// $lastMessage = $channel->query([
+										// 	'messages' => ['limit'=>2],
+										// ]);
+									@endphp
 									<div class="col-lg-3 col-sm-6">
 										<div class="box">
 											<div class="img-box">
@@ -114,13 +128,13 @@
 											</div>
 											<div class="detail-box">
 												<h5>{{ $mentor->name }}</h5>
-												<p>Spesialis Mental Health</p>
+												<p>{{ $lastMessage }}</p>
 											</div>
 											<div class="social_box">
 												<a href="#">
 												</a>
-												<a href="#" id="createChatLink" data-user-id="{{ Auth::user()->id }}" data-mentor-id="{{ $mentor->id }}">
-												<i class="fa fa-comments" aria-hidden="true"></i>
+												<a href="{{ route('chat.initializeChat', ['otherId' => $mentor->id]) }}">
+													<i class="fa fa-comments" aria-hidden="true"></i>
 													Chat
 												</a>
 												<a href="#">
@@ -132,6 +146,11 @@
 							@endif
 							@if(auth()->user()->role === 'mentor')
 								@foreach ($users as $user)
+									@php
+										$channel = collect($channels['channels'])->firstWhere('members', fn($members) => in_array($user->id, array_column($members, 'user_id')));
+										$lastMessage = $channel['messages'][0]['text'] ?? 'No messages yet';
+									@endphp
+
 									<div class="col-lg-3 col-sm-6">
 										<div class="box">
 											<div class="img-box">
@@ -139,17 +158,15 @@
 											</div>
 											<div class="detail-box">
 												<h5>{{ $user->name }}</h5>
-												<p>Insert message here</p>
+												<p>{{ $lastMessage }}</p>
 											</div>
 											<div class="social_box">
-												<a href="#">
-												</a>
-												<a href="#" id="createChatLink" data-user-id="{{ Auth::user()->id }}" data-mentor-id="{{ $user->id }}">
-												<i class="fa fa-comments" aria-hidden="true"></i>
+												<a href="#"></a>
+												<a href="{{ route('chat.initializeChat', ['otherId' => $user->id]) }}">
+													<i class="fa fa-comments" aria-hidden="true"></i>
 													Chat
 												</a>
-												<a href="#">
-												</a>
+												<a href="#"></a>
 											</div>
 										</div>
 									</div>
@@ -165,6 +182,7 @@
 
 @endsection
 @section('page-specific-scripts')
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="{{ asset('User-depan/js/initialize_chat.js') }}"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/getstream@8.4.1/lib/index.min.js"></script>
+    <script src="{{ asset('User-depan/js/initialize_chat.js') }}"></script> --}}
 @endsection
