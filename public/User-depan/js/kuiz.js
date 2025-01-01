@@ -85,7 +85,7 @@ startkuiz = () => {
     if (availableQuesions.length === 0 || questionCounter >= MAX_QUESTIONS) {
       clearInterval(timerInterval);
       localStorage.setItem("mostRecentScore", score);
-      return window.location.assign(`/service5?score=${score}`);
+      window.location.assign(`hasilkuiz?score=${score}`);
     }
   
     questionCounter++;
