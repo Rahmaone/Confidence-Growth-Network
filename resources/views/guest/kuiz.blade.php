@@ -37,7 +37,7 @@
             Kuis membantu memperkuat retensi informasi melalui pengulangan dan peninjauan materi.
             Mengambil kuis setelah mempelajari materi dapat membantu pengguna menyimpan informasi lebih lama
           <div class="btn-box">
-            <a href="{{route('pelaksanaankuiz')}}" class="btn1"> Mulai Kuis </a>
+            <a href="{{route('user.pelaksanaankuiz')}}" class="btn1"> Mulai Kuis </a>
           </div>
         </div>
       </div>

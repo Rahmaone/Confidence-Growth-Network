@@ -66,16 +66,18 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::get('modulPembelajaran/create', [AdminController::class, 'buatModul'])->name('buatModul'); // Halaman buat modul
         Route::post('modulPembelajaran/store', [AdminController::class, 'createModul'])->name('createModul'); // Proses simpan modul baru
         Route::get('modulPembelajaran/{id}/editModul', [AdminController::class, 'editModul'])->name('editModul'); // Halaman edit modul
+
         Route::put('modulPembelajaran/{id}/update', [AdminController::class, 'updateModul'])->name('updateModul');// Proses update modul baru
         Route::delete('modulPembelajaran/{id}/delete', [AdminController::class, 'deleteModul'])->name('deleteModul');// Proses delete modul baru
+
     });
 });
 
 Route::middleware(['auth', 'role:user'])->group(function () {
     Route::prefix('user')->as('user.')->group(function () {
         Route::get('/bukamodulPembelajaran', [userController::class, 'bukamodulPembelajaran'])->name('bukamodulPembelajaran');
-        
-        
+        Route::get('/pelaksanaankuiz', [UserController::class, 'pelaksanaankuiz'])->name('pelaksanaankuiz');
+        Route::get('/hasilkuiz', [UserController::class, 'hasilkuiz'])->name('hasilkuiz');
     });
 });
 
@@ -84,7 +86,7 @@ Route::middleware(['auth', 'role:user,mentor'])->group(function () {
         Route::get('/chatmentor', [UserController::class, 'chatmentor'])->name('chatmentor');
 
         Route::get('/initializeChat/{otherId}', [UserController::class, 'initializeChat'])->name('initializeChat');
-        
+
     });
 });
 
@@ -92,8 +94,6 @@ Route::get('/home', [guestController::class, 'index'])->name('home');
 Route::get('/service', [guestController::class, 'service'])->name('service');
 Route::get('/service2', [guestController::class, 'chatmentor'])->name('chatmentor');
 Route::get('/service3', [guestController::class, 'kuiz'])->name('kuiz');
-Route::get('/service4', [guestController::class, 'pelaksanaankuiz'])->name('pelaksanaankuiz');
-Route::get('/service5', [guestController::class, 'hasilkuiz'])->name('hasilkuiz');
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
     // route ke halaman yang cuman bisa diakses admin dan mentor
