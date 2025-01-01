@@ -1,5 +1,7 @@
 @extends('layout.app')
 
+
+
 @section('content')
 
     <div class="hero_area">
@@ -72,8 +74,8 @@
 										
 										</h1>
 										<p>
-										Di sini pengguna dapat berkonsultasi dengan mentor kami yang profesional guna memastikan
-										pengguna merasakan pengalaman pelayanan konsultasi terbaik dari kami
+											Di sini pengguna dapat berkonsultasi dengan mentor kami yang profesional guna memastikan
+											pengguna merasakan pengalaman pelayanan konsultasi terbaik dari kami
 										</p>
 									</div>
 								</div>
@@ -112,6 +114,13 @@
 						@auth
 							@if(auth()->user()->role === 'user' || auth()->user()->role === 'admin')
 								@foreach ($mentors as $mentor)
+									@php
+										$channel = collect($channels['channels'])->firstWhere('members', fn($members) => in_array($mentor->id, array_column($members, 'user_id')));
+										$lastMessage = $channel['messages'][1]['text'] ?? 'No messages yet';
+										// $lastMessage = $channel->query([
+										// 	'messages' => ['limit'=>2],
+										// ]);
+									@endphp
 									<div class="col-lg-3 col-sm-6">
 										<div class="box">
 											<div class="img-box">
@@ -119,7 +128,7 @@
 											</div>
 											<div class="detail-box">
 												<h5>{{ $mentor->name }}</h5>
-												<p>Spesialis Mental Health</p>
+												<p>{{ $lastMessage }}</p>
 											</div>
 											<div class="social_box">
 												<a href="#">
