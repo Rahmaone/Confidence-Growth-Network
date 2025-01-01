@@ -14,7 +14,7 @@ class UserController extends Controller
 
     public function index()
     {
-       return view('admin.users.index');
+        return view('admin.users.index');
     }
 
     public function login()
@@ -38,5 +38,14 @@ class UserController extends Controller
         return view('user.fitur.chat-mentor', compact('mentors', 'users'));
     }
 
+    public function pelaksanaankuiz()
+    {
+        return view('user.fitur.pelaksanaankuiz');
+    }
 
+    public function hasilkuiz(Request $request)
+    {
+        $score = $request->query('score', 0); // Default score ke 0 jika tidak ada
+        return view('user.fitur.hasilkuiz', compact('score'));
+    }
 }

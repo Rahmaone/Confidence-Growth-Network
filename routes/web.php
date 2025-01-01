@@ -62,8 +62,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::get('modulPembelajaran/create', [AdminController::class, 'buatModul'])->name('buatModul'); // Halaman buat modul
         Route::post('modulPembelajaran/store', [AdminController::class, 'createModul'])->name('createModul'); // Proses simpan modul baru
         Route::get('modulPembelajaran/{id}/editModul', [AdminController::class, 'editModul'])->name('editModul'); // Halaman edit modul
-        Route::put('modulPembelajaran/{id}/update', [AdminController::class, 'updateModul'])->name('updateModul');// Proses simpan modul baru
-        Route::delete('modulPembelajaran/{id}/delete', [AdminController::class, 'deleteModul'])->name('deleteModul');// Proses delete modul baru
+        Route::put('modulPembelajaran/{id}/update', [AdminController::class, 'updateModul'])->name('updateModul'); // Proses simpan modul baru
+        Route::delete('modulPembelajaran/{id}/delete', [AdminController::class, 'deleteModul'])->name('deleteModul'); // Proses delete modul baru
     });
 });
 
@@ -71,10 +71,11 @@ Route::middleware(['auth', 'role:user'])->group(function () {
     Route::prefix('user')->as('user.')->group(function () {
         Route::get('/chatmentor', [UserController::class, 'chatmentor'])->name('chatmentor');
         Route::get('/bukamodulPembelajaran', [userController::class, 'bukamodulPembelajaran'])->name('bukamodulPembelajaran');
-        
+
         Route::post('/create-private-chat', [StreamChatController::class, 'createPrivateChat']);
         Route::get('/check-private-chat/{channelId}', [StreamChatController::class, 'checkPrivateChat']);
-
+        Route::get('/pelaksanaankuiz', [UserController::class, 'pelaksanaankuiz'])->name('pelaksanaankuiz');
+        Route::get('/hasilkuiz', [UserController::class, 'hasilkuiz'])->name('hasilkuiz');
     });
 });
 
