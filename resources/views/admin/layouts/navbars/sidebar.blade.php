@@ -12,6 +12,29 @@
                 </a>
             </li>
             <li>
+                <a data-toggle="collapse" href="#users" aria-expanded="true">
+                    <i class="tim-icons icon-user-run"></i>
+                    <span class="nav-link-text">{{ __('User Management') }}</span>
+                    <b class="caret mt-1"></b>
+                </a>
+                <div class="collapse show" id="users">
+                    <ul class="nav pl-4">
+                        <li>
+                            <a href="{{ route('admin.userManagement') }}">
+                                <i class="tim-icons icon-bullet-list-67"></i>
+                                <p>{{ __('Daftar User') }}</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin.buatUser') }}">
+                                <i class="tim-icons icon-simple-add"></i>
+                                <p>{{ __('Tambah User') }}</p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <li>
                 <a data-toggle="collapse" href="#modul-pembelajaran" aria-expanded="true">
                     <i class="tim-icons icon-book-bookmark"></i>
                     <span class="nav-link-text">{{ __('Modul Pembelajaran') }}</span>

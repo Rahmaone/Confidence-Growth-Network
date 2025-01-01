@@ -88,7 +88,6 @@ class UserController extends Controller
         $score = $request->query('score', 0); // Default score ke 0 jika tidak ada
         return view('user.fitur.hasilkuiz', compact('score'));
     }
-}
     public function initializeChat($otherId) 
     {
         $currentUser = Auth::user(); // Asumsikan pengguna yang login

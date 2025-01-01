@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\ModulPembelajaran;
 use App\Models\Event;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage; // Tambahkan ini
 use Illuminate\Support\Str;
@@ -301,5 +302,103 @@ class AdminController extends Controller
         $event->delete();
 
         return redirect()->route('admin.eventAnnouncement')->with('success', 'Event berhasil dihapus!');
+    }
+
+    // CRUD User Below
+
+    public function userManagement()
+    {
+        $users = User::all();
+        return view('admin.pages.User_Management.userManagement', ['users' => $users]);
+    }
+
+    // Halaman buat event
+    public function buatUser()
+    {
+        return view('admin.pages.User_Management.createUser');
+    }
+
+    // Proses simpan event baru
+    public function simpanUser(Request $request)
+    {
+        $validated = $request->validate([
+            'email' => 'required|string|email|max:255|unique:user',
+            'name' => 'required|string|max:32',
+            'password' => 'required|string|min:8',
+            'role' => 'required|in:user,mentor,admin',
+            'image_path' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        // Upload gambar jika ada
+        $imagePath = null;
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('image_path', 'public');
+        }
+
+        // Menyimpan data event ke database
+        User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => Hash::make($validated['password']),
+            'role' => $validated['role'],
+            'image_path' => $validated['image_path'],
+        ]);
+
+        return redirect()->route('admin.userManagement')->with('success', 'User berhasil ditambahkan!');
+    }
+
+    // Halaman edit event
+    public function editUser($id)
+    {
+        $user = User::findOrFail($id);
+        return view('admin.pages.User_Management.edit', ['user' => $user]);
+    }
+
+    // Proses update user baru
+    public function updateUser(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:32',
+            'role' => 'required|in:user,mentor,admin',
+            'image_path' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        // Temukan user berdasarkan ID
+        $user = User::findOrFail($id);
+
+        // Upload gambar baru jika ada
+        $imagePath = $user->image_path;
+        if ($request->hasFile('image')) {
+            // Hapus gambar lama jika ada
+            if ($imagePath && Storage::disk('public')->exists($imagePath)) {
+                Storage::disk('public')->delete($imagePath);
+            }
+            $imagePath = $request->file('image')->store('user_images', 'public');
+        }
+
+        // Update event
+        $user->update([
+            'name' => $validated['name'],
+            'role' => $validated['role'],
+            'image_path' => $validated['image_path'],
+        ]);
+
+        return redirect()->route('admin.userManagement')->with('success', 'User berhasil diperbarui!');
+    }
+
+    // Proses delete user
+    public function deleteUser($id)
+    {
+        $user = User::findOrFail($id);
+
+        // Hapus gambar jika ada
+        if ($user->gambar && Storage::disk('public')->exists($user->image_path)) {
+            Storage::disk('public')->delete($user->image_path);
+        }
+
+        // Hapus user dari database
+        $user->delete();
+
+        return redirect()->route('admin.userManagement')->with('success', 'User berhasil dihapus!');
     }
 }

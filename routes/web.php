@@ -55,6 +55,14 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
             Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
         });
 
+        Route::get('userManagement', [AdminController::class, 'userManagement'])->name('userManagement'); // Halaman user management
+        Route::get('userManagement/create', [AdminController::class, 'buatUser'])->name('buatUser'); // Halaman buat user
+        Route::post('userManagement/store', [AdminController::class, 'simpanUser'])->name('simpanUser'); // Proses simpan user baru
+        Route::get('userManagement/{id}/edit', [AdminController::class, 'editUser'])->name('editUser'); // Halaman edit user
+        Route::put('userManagement/{id}/update', [AdminController::class, 'updateUser'])->name('updateUser'); // Proses update user baru
+        Route::delete('userManagement/{id}/delete', [AdminController::class, 'deleteUser'])->name('deleteUser'); // Proses delete user
+
+
         Route::get('eventAnnouncement', [AdminController::class, 'eventAnnouncement'])->name('eventAnnouncement'); // Halaman daftar event (index)
         Route::get('eventAnnouncement/create', [AdminController::class, 'buatEvent'])->name('buatEvent'); // Halaman buat event
         Route::post('eventAnnouncement/store', [AdminController::class, 'simpanEvent'])->name('simpanEvent'); // Proses simpan event baru
