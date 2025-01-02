@@ -25,4 +25,12 @@ class guestController extends Controller
     {
         return view('guest.kuiz');
     }
+    public function event()
+    {
+        return view('guest.event');
+    }
+    public function about()
+    {
+        return view('guest.about');
+    }
 }
