@@ -38,15 +38,15 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         // Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
         // ->middleware('auth');
         // ['middleware' => 'auth'],
-        Route::prefix('pages')->as('pages.')->group(function () {
-            Route::get('icons', [AdminController::class, 'icons'])->name('icons');
-            Route::get('maps', [AdminController::class, 'maps'])->name('maps');
-            Route::get('notifications', [AdminController::class, 'notifications'])->name('notifications');
-            Route::get('rtl', [AdminController::class, 'rtl'])->name('rtl');
-            Route::get('tables', [AdminController::class, 'tables'])->name('tables');
-            Route::get('typography', [AdminController::class, 'typography'])->name('typography');
-            Route::get('upgrade', [AdminController::class, 'upgrade'])->name('upgrade');
-        });
+        // Route::prefix('pages')->as('pages.')->group(function () {
+        //     Route::get('icons', [AdminController::class, 'icons'])->name('icons');
+        //     Route::get('maps', [AdminController::class, 'maps'])->name('maps');
+        //     Route::get('notifications', [AdminController::class, 'notifications'])->name('notifications');
+        //     Route::get('rtl', [AdminController::class, 'rtl'])->name('rtl');
+        //     Route::get('tables', [AdminController::class, 'tables'])->name('tables');
+        //     Route::get('typography', [AdminController::class, 'typography'])->name('typography');
+        //     Route::get('upgrade', [AdminController::class, 'upgrade'])->name('upgrade');
+        // });
 
         Route::group([], function () {
             Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
@@ -81,11 +81,13 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     });
 });
 
-Route::middleware(['auth', 'role:user'])->group(function () {
+Route::middleware(['auth', 'role:user,mentor,admin'])->group(function () {
     Route::prefix('user')->as('user.')->group(function () {
         Route::get('/bukamodulPembelajaran', [userController::class, 'bukamodulPembelajaran'])->name('bukamodulPembelajaran');
         Route::get('/pelaksanaankuiz', [UserController::class, 'pelaksanaankuiz'])->name('pelaksanaankuiz');
         Route::get('/hasilkuiz', [UserController::class, 'hasilkuiz'])->name('hasilkuiz');
+        Route::get('/eventAnnouncement', [UserController::class, 'eventAnnouncement'])->name('eventAnnouncement');
+        Route::get('/eventAnnouncement/{slug}', [UserController::class, 'bukaEvent'])->name('bukaEvent');
     });
 });
 

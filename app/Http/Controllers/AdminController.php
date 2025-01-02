@@ -208,6 +208,7 @@ class AdminController extends Controller
         $validated = $request->validate([
             'nama' => 'required|string|max:255',
             'mentor' => 'required|string|max:255',
+            'deskripsi' => 'nullable|string|max:4096',
             'lokasi' => 'required|string|max:255',
             'waktu_mulai' => 'required|date',
             'waktu_selesai' => 'required|date',
@@ -233,6 +234,7 @@ class AdminController extends Controller
         Event::create([
             'nama' => $validated['nama'],
             'mentor' => $validated['mentor'],
+            'deskripsi' => $validated['deskripsi'],
             'lokasi' => $validated['lokasi'],
             'waktu_mulai' => $validated['waktu_mulai'],
             'waktu_selesai' => $validated['waktu_selesai'],
@@ -256,6 +258,7 @@ class AdminController extends Controller
         $validated = $request->validate([
             'nama' => 'required|string|max:255',
             'mentor' => 'required|string|max:255',
+            'deskripsi' => 'nullable|string|max:4096',
             'lokasi' => 'required|string|max:255',
             'waktu_mulai' => 'required|date',
             'waktu_selesai' => 'required|date',
@@ -279,6 +282,7 @@ class AdminController extends Controller
         $event->update([
             'nama' => $validated['nama'],
             'mentor' => $validated['mentor'],
+            'deskripsi' => $validated['deskripsi'],
             'lokasi' => $validated['lokasi'],
             'waktu_mulai' => $validated['waktu_mulai'],
             'waktu_selesai' => $validated['waktu_selesai'],

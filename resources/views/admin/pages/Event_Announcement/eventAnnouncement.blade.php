@@ -26,6 +26,7 @@
                             <th>No</th>
                             <th>Nama Event</th>
                             <th>Mentor</th>
+                            <th>Deskripsi</th>
                             <th>Lokasi</th>
                             <th>Waktu Mulai</th>
                             <th>Waktu Selesai</th>
@@ -41,9 +42,11 @@
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $event->nama }}</td>
                                     <td>{{ $event->mentor }}</td>
+                                    <td>{{ $event->deskripsi }}</td>
                                     <td>{{ $event->lokasi }}</td>
-                                    <td>{{ $event->waktu_mulai->format('d-m-Y H:i') }}</td>
-                                    <td>{{ $event->waktu_selesai->format('d-m-Y H:i') }}</td>
+                                    <td>{{ $event->waktu_mulai}}</td>
+                                    <td>{{ $event->waktu_selesai}}</td>
+                                    <!-- ->format('d-m-Y H:i') -->
                                     <td>{{ $event->slug }}</td>
                                     <td>
                                         @if($event->gambar)

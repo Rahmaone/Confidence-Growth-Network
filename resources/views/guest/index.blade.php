@@ -104,7 +104,7 @@
                     Growth Network
                   </h1>
                   <p>
-                    Aplikasi Confident Growth Network adalah platform inovatif yang dirancang untuk membantu individu dalam mengembangkan kepercayaan diri dan keterampilan pertumbuhan pribadi mereka.
+                    Aplikasi Confidence Growth Network adalah platform inovatif yang dirancang untuk membantu individu dalam mengembangkan kepercayaan diri dan keterampilan pertumbuhan pribadi mereka.
                   </p>
                   <div class="btn-box">
                     <a href="" class="btn1"> Selengkapnya </a>
@@ -225,10 +225,6 @@
   <div class="container">
     <div class="heading_container heading_center">
       <h1>About us</h1>
-      <p>
-        Magni quod blanditiis non minus sed aut voluptatum illum quisquam
-        aspernatur ullam vel beatae rerum ipsum voluptatibus
-      </p>
     </div>
     <div class="row">
       <div class="col-md-6">
@@ -240,20 +236,20 @@
         <div class="detail-box">
           <h2>We Are CGN</h2>
           <p>
-            There are many variations of passages of Lorem Ipsum available,
-            but the majority have suffered alteration in some form, by
-            injected humour, or randomised words which don't look even
-            slightly believable. If you are going to use a passage of Lorem
-            Ipsum, you need to be sure there isn't anything embarrassing
-            hidden in the middle of text. All
+            Confidence Growth Network (CGN) adalah aplikasi web yang menginspirasi 
+            individu untuk meningkatkan kepercayaan diri dalam bersosialisasi melalui 
+            pendekatan komunitas yang mendukung dengan empat fitur utama yang 
+            dirancang untuk memenuhi kebutuhan pengembangan diri. 
           </p>
           <p>
-            Molestiae odio earum non qui cumque provident voluptates,
-            repellendus exercitationem, possimus at iste corrupti officiis
-            unde alias eius ducimus reiciendis soluta eveniet. Nobis ullam
-            ab omnis quasi expedita.
+            CGN menawarkan: modul pembelajaran interaktif yang membantu pengguna memahami 
+            dan menguasai keterampilan sosial secara mendalam, kuis menarik untuk menguji dan 
+            memperkuat pemahaman, chat dengan mentor berpengalaman untuk mendapatkan 
+            bimbingan personal, serta pengumuman acara (event announcement) yang 
+            membuka peluang untuk berpartisipasi dalam kegiatan sosial dan jaringan 
+            yang membangun. Dengan CGN, perjalanan menuju kepercayaan diri yang 
+            lebih tinggi menjadi lebih mudah, terarah, dan menyenangkan!
           </p>
-          <a href=""> Read More </a>
         </div>
       </div>
     </div>
@@ -271,14 +267,14 @@
 
     <div class="team_container">
       <div class="row">
+        @foreach ($mentors as $mentor)
         <div class="col-lg-3 col-sm-6">
           <div class="box">
             <div class="img-box">
               <img src="{{ asset('User-depan/images/team-1.jpg') }}" class="img1" alt="" />
             </div>
             <div class="detail-box">
-              <h5>Sauqi Akbar Mubarok</h5>
-              <p>Front Pembela Islam</p>
+              <h5>{{ $mentor->name }}</h5>
             </div>
             <div class="social_box">
               <a href="#">
@@ -299,90 +295,7 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-3 col-sm-6">
-          <div class="box">
-            <div class="img-box">
-              <img src="images/team-2.jpg" class="img1" alt="" />
-            </div>
-            <div class="detail-box">
-              <h5>Nancy White</h5>
-              <p>Marketing Head</p>
-            </div>
-            <div class="social_box">
-              <a href="#">
-                <i class="fa fa-facebook" aria-hidden="true"></i>
-              </a>
-              <a href="#">
-                <i class="fa fa-twitter" aria-hidden="true"></i>
-              </a>
-              <a href="#">
-                <i class="fa fa-linkedin" aria-hidden="true"></i>
-              </a>
-              <a href="#">
-                <i class="fa fa-instagram" aria-hidden="true"></i>
-              </a>
-              <a href="#">
-                <i class="fa fa-youtube-play" aria-hidden="true"></i>
-              </a>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-sm-6">
-          <div class="box">
-            <div class="img-box">
-              <img src="images/team-3.jpg" class="img1" alt="" />
-            </div>
-            <div class="detail-box">
-              <h5>Earl Martinez</h5>
-              <p>Marketing Head</p>
-            </div>
-            <div class="social_box">
-              <a href="#">
-                <i class="fa fa-facebook" aria-hidden="true"></i>
-              </a>
-              <a href="#">
-                <i class="fa fa-twitter" aria-hidden="true"></i>
-              </a>
-              <a href="#">
-                <i class="fa fa-linkedin" aria-hidden="true"></i>
-              </a>
-              <a href="#">
-                <i class="fa fa-instagram" aria-hidden="true"></i>
-              </a>
-              <a href="#">
-                <i class="fa fa-youtube-play" aria-hidden="true"></i>
-              </a>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-sm-6">
-          <div class="box">
-            <div class="img-box">
-              <img src="images/team-4.jpg" class="img1" alt="" />
-            </div>
-            <div class="detail-box">
-              <h5>Josephine Allard</h5>
-              <p>Marketing Head</p>
-            </div>
-            <div class="social_box">
-              <a href="#">
-                <i class="fa fa-facebook" aria-hidden="true"></i>
-              </a>
-              <a href="#">
-                <i class="fa fa-twitter" aria-hidden="true"></i>
-              </a>
-              <a href="#">
-                <i class="fa fa-linkedin" aria-hidden="true"></i>
-              </a>
-              <a href="#">
-                <i class="fa fa-instagram" aria-hidden="true"></i>
-              </a>
-              <a href="#">
-                <i class="fa fa-youtube-play" aria-hidden="true"></i>
-              </a>
-            </div>
-          </div>
-        </div>
+        @endforeach
       </div>
     </div>
   </div>

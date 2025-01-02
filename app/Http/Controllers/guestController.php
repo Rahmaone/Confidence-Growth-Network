@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class guestController extends Controller
 {
     public function index()
     {
-        return view('guest.index');
+        $mentors = User::where('role', 'mentor')->get();
+        return view('guest.index', compact('mentors'));
     }
     public function service()
     {

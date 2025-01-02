@@ -21,6 +21,9 @@ class Event extends Model
         'waktu_selesai',
         'gambar',
         'slug',  // Menambahkan slug di sini
+        'deskripsi',
+        'tanggal_mulai',
+        'tanggal_selesai',
     ];
 
     // Fungsi untuk menentukan sumber slug (berdasarkan kolom 'nama')

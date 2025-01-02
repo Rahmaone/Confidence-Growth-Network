@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Event;
 use GetStream\StreamChat\Client;
 use App\Services\StreamChatService;
 use Illuminate\Http\Request;
@@ -148,5 +149,11 @@ class UserController extends Controller
             \Log::error('Stream.io error: ' . $e->getMessage());
             return abort(500, 'Failed to initialize chat');
         }
+    }
+    public function eventAnnouncement()
+    {
+        $events = Event::paginate(3);
+        return view('user.fitur.event_Announcement', compact('events'));
+        dd($events);
     }
 }

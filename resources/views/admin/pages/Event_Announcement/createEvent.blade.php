@@ -56,6 +56,19 @@
                             >
                         </div>
 
+                        <div class="mb-3">
+                            <label for="deskripsi" class="form-label">Deskripsi</label>
+                            <textarea
+                                class="form-control"
+                                id="deskripsi"
+                                name="deskripsi"
+                                rows="5"
+                                placeholder="Masukkan deskripsi..."
+                                required
+                                style="border: 1px solid #ccc; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); padding: 10px;"
+                            ></textarea>
+                        </div>
+
                         <!-- Lokasi -->
                         <div class="mb-3">
                             <label for="lokasi" class="form-label">Lokasi</label>

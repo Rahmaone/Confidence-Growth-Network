@@ -32,42 +32,44 @@
             Services
           </a>
           <div class="dropdown-menu" aria-labelledby="serviceDropdown">
-            <a class="dropdown-item" href="{{route('user.bukamodulPembelajaran')}}">Modul Pembelajaran</a>
-            <a class="dropdown-item" href="{{ route('user.chatmentor') }}">Chat Mentor CGN</a>
-            <a class="dropdown-item" href="{{route('kuiz')}}">Kuis</a>
-            <a class="dropdown-item" href="#">Event</a>
+            <a class="dropdown-item" href="{{ route('user.bukamodulPembelajaran') }}">Modul Pembelajaran</a>
+            <a class="dropdown-item" href="{{ route('chat.chatmentor') }}">Chat Mentor CGN</a>
+            <a class="dropdown-item" href="{{ route('kuiz') }}">Kuis</a>
+            <a class="dropdown-item" href="{{ route('user.eventAnnouncement') }}">Event</a>
           </div>
         </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="">About</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="">Team</a>
+      </li>
+      @auth
+      <li class="nav-item">
+        <div class="dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            role="button"
+            id="profileDropdown"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false">
+            <i class="fa fa-user" aria-hidden="true"></i>{{ Auth::user()->name }}
+          </a>
+          <div class="dropdown-menu" aria-labelledby="profileDropdown">
+            <form action="{{ route('logout') }}" method="POST">
+              @csrf
+              @method('POST') <!-- CSRF token and POST method -->
+              <button type="submit" class="dropdown-item btn">Logout</button>
+            </form>
+          </div>
+      </li>
   </div>
   </li>
 
-  <li class="nav-item">
-    <a class="nav-link" href="#about">About</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="#team">Team</a>
-  </li>
-  @auth
-  <li class="nav-item">
-    <div class="dropdown">
-      <a
-        class="nav-link dropdown-toggle"
-        href="#"
-        role="button"
-        id="profileDropdown"
-        data-toggle="dropdown"
-        aria-haspopup="true"
-        aria-expanded="false">
-        <i class="fa fa-user" aria-hidden="true"></i>{{ Auth::user()->name }}
-      </a>
-      <div class="dropdown-menu" aria-labelledby="profileDropdown">
-        <form action="{{ route('logout') }}" method="POST">
-          @csrf
-          @method('POST') <!-- CSRF token and POST method -->
-          <button type="submit" class="dropdown-item btn">Logout</button>
-        </form>
-      </div>
-  </li>
+
   @endauth
   @guest
   <li class="nav-item">
