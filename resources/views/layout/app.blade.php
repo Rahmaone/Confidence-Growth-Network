@@ -4,6 +4,9 @@
 <head>
     @include('layout.head')
     @yield('page-css') <!-- Untuk CSS khusus halaman -->
+      <!-- Favicon -->
+   <link rel="apple-touch-icon" sizes="76x76" href="User-depan/images/Logo.png">
+   <link rel="icon" type="image/png" href="User-depan/images/Logo.png">
 </head>
 
 <body>

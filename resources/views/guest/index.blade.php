@@ -206,7 +206,7 @@
                 "Ikuti event modul CGN dan raih peluang luar biasa untuk belajar langsung dari ahli.
                 Tingkatkan pengetahuan dan keterampilan Anda bersama komunitas yang mendukung."
               </p>
-              <a href=""> Baca selengkapnya </a>
+              <a href="{{route('event')}}"> Baca selengkapnya </a>
             </div>
           </div>
         </div>
@@ -236,18 +236,18 @@
         <div class="detail-box">
           <h2>We Are CGN</h2>
           <p>
-            Confidence Growth Network (CGN) adalah aplikasi web yang menginspirasi 
-            individu untuk meningkatkan kepercayaan diri dalam bersosialisasi melalui 
-            pendekatan komunitas yang mendukung dengan empat fitur utama yang 
-            dirancang untuk memenuhi kebutuhan pengembangan diri. 
+            Confidence Growth Network (CGN) adalah aplikasi web yang menginspirasi
+            individu untuk meningkatkan kepercayaan diri dalam bersosialisasi melalui
+            pendekatan komunitas yang mendukung dengan empat fitur utama yang
+            dirancang untuk memenuhi kebutuhan pengembangan diri.
           </p>
           <p>
-            CGN menawarkan: modul pembelajaran interaktif yang membantu pengguna memahami 
-            dan menguasai keterampilan sosial secara mendalam, kuis menarik untuk menguji dan 
-            memperkuat pemahaman, chat dengan mentor berpengalaman untuk mendapatkan 
-            bimbingan personal, serta pengumuman acara (event announcement) yang 
-            membuka peluang untuk berpartisipasi dalam kegiatan sosial dan jaringan 
-            yang membangun. Dengan CGN, perjalanan menuju kepercayaan diri yang 
+            CGN menawarkan: modul pembelajaran interaktif yang membantu pengguna memahami
+            dan menguasai keterampilan sosial secara mendalam, kuis menarik untuk menguji dan
+            memperkuat pemahaman, chat dengan mentor berpengalaman untuk mendapatkan
+            bimbingan personal, serta pengumuman acara (event announcement) yang
+            membuka peluang untuk berpartisipasi dalam kegiatan sosial dan jaringan
+            yang membangun. Dengan CGN, perjalanan menuju kepercayaan diri yang
             lebih tinggi menjadi lebih mudah, terarah, dan menyenangkan!
           </p>
         </div>

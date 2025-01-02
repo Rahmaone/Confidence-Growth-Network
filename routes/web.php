@@ -21,8 +21,11 @@ use App\Http\Controllers\Api\StreamChatController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/home');
 });
+
+// Route untuk halaman '/home'
+Route::get('/home', [HomeController::class, 'index'])->name('home.index');
 
 Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('login', [LoginController::class, 'login']);
@@ -32,7 +35,7 @@ Route::post('register', [RegisterController::class, 'register'])->name('register
 // Auth::routes();
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::prefix('admin')->as('admin.')->group(function () {
-        Route::get('home', [HomeController::class, 'index'])->name('home');
+        Route::get('/home', [HomeController::class, 'index'])->name('home');
         // Auth::routes();
 
         // Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
@@ -104,11 +107,14 @@ Route::get('/home', [guestController::class, 'index'])->name('home');
 Route::get('/service', [guestController::class, 'service'])->name('service');
 Route::get('/service2', [guestController::class, 'chatmentor'])->name('chatmentor');
 Route::get('/service3', [guestController::class, 'kuiz'])->name('kuiz');
+Route::get('/service4', [guestController::class, 'event'])->name('event');
+Route::get('/about', [guestController::class, 'about'])->name('about');
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
     // route ke halaman yang cuman bisa diakses admin dan mentor
 
 });
+
 
 
 Route::group(['middleware' => 'authuser'], function () {});
