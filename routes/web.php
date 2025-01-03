@@ -112,7 +112,6 @@ Route::get('/about', [guestController::class, 'about'])->name('about');
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
     // route ke halaman yang cuman bisa diakses admin dan mentor
-
 });
 
 
