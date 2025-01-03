@@ -20,6 +20,11 @@ class LoginController extends Controller
         ]);
 
         if (Auth::attempt($request->only('email', 'password'))) {
+            $user = Auth::user();
+
+            if ($user->role == 'admin') { // Ganti is_admin dengan atribut atau metode yang sesuai
+                return redirect()->route('admin.home');
+            }
             return redirect()->route('home');
         }
 

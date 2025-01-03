@@ -43,7 +43,6 @@
     
     h3, h5, h6 {
         font-family: Arial, sans-serif;
-        background-color: #f9f9f9;
         color: #333;
         margin: 0;
         padding: 0;
@@ -92,7 +91,6 @@
     
     .pargarafmodul {
         font-family: Arial, sans-serif;
-        background-color: #f9f9f9;
         text-align: justify;
         margin-top: 10px;
         line-height: 1.6;
