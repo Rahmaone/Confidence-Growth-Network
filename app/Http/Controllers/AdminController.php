@@ -189,6 +189,23 @@ class AdminController extends Controller
         return redirect()->route('admin.modulPembelajaran')->with('success', 'Modul berhasil diperbarui!');
     }
 
+     // Fungsi untuk menghapus modul
+     public function deleteModul($id)
+     {
+         $modul = ModulPembelajaran::findOrFail($id);
+         // Hapus file dari storage jika ada
+         if ($modul->file) {
+             Storage::disk('public')->delete($modul->file);
+         }
+         // Hapus gambar dari storage jika ada
+         if ($modul->image) {
+             Storage::disk('public')->delete($modul->image);
+         }
+         // Hapus modul dari database
+         $modul->delete();
+         return redirect()->route('admin.modulPembelajaran')->with('success', 'Modul berhasil dihapus!');
+     }
+
     // Halaman daftar event (index)
     public function eventAnnouncement()
     {
