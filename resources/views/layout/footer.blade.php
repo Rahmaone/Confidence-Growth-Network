@@ -40,9 +40,9 @@
           <div class="info_detail">
             <h4>Info</h4>
             <p>
-              necessary, making this the first true generator on the Internet.
-              It uses a dictionary of over 200 Latin words, combined with a
-              handful
+              Confidence Growth Network (CGN), sebuah aplikasi yang menawarkan berbagai fitur
+              interaktif yang bertujuan untuk membantu penggunanya meningkatkan rasa percaya diri
+              melalui berbagai latihan, umpan balik positif, dan pembelajaran tentang mindset yang mendukung.
             </p>
           </div>
         </div>
