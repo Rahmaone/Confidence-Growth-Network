@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Models\ModulPembelajaran;
+use App\Models\Event;
+
 class HomeController extends Controller
 {
     /**
@@ -21,6 +25,15 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('admin.dashboard');
+        $totalUsers = User::where('role', 'user')->count(); 
+        $totalMentors = User::where('role', 'mentor')->count(); 
+        $totalModuls = ModulPembelajaran::all()->count();
+        $totalEvents = Event::all()->count();
+        return view('admin.dashboard', compact(
+            'totalUsers',
+            'totalMentors',
+            'totalModuls',
+            'totalEvents'
+        ));
     }
 }
