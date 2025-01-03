@@ -158,7 +158,7 @@
 											</div>
 											<div class="detail-box">
 												<h5>{{ $user->name }}</h5>
-												<p>{{ $lastMessage }}</p>
+												{{-- <p>{{ $lastMessage }}</p> --}}
 											</div>
 											<div class="social_box">
 												<a href="#"></a>
